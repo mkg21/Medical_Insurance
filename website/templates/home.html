@@ -1,5 +1,41 @@
 {% extends "base.html" %}
 {% block title %}Homes{% endblock %}
 {% block content %}
-    home Page
+<div>
+    <div>
+        <div class="d-lg-flex justify-content-lg-center"></div>
+    </div>
+    <div class="d-lg-flex justify-content-center justify-content-lg-center" style="margin-right: 100px;margin-left: 100px;margin-top: 24px;margin-bottom: 50px;">
+        <div class="container shadow" style="background: rgba(177,53,220,0.07);padding: 29px;border-radius: 14px;">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="d-lg-flex justify-content-lg-center" style="text-align: center;"></div>
+                </div>
+            </div>
+            <div class="row" style="margin-top: -17px;padding-top: 51px;padding-bottom: 56px;border-top-color: var(--bs-cyan);">
+                <div class="col">
+                    <div class="row">
+                        <div class="col-md-12 text-center" style="margin-bottom: 55px;margin-top: 20px;">
+                            <button onclick="window.location.href='{{ url_for( 'views.customer'  ) }}';"  class="btn btn-primary border rounded" type="button" style="margin-right: 35px;margin-left: 35px;margin-top: 10px;margin-bottom: 10px;filter: hue-rotate(0deg);height: 63px;font-size: 20px;font-weight: bold;background: var(--bs-red);width: 336.238px;padding-top: 3px;">View website as customer</button></div>
+                    </div>
+                </div>
+                <div class="col-md-12 text-center">
+                   <button onclick="window.location.href='{{ url_for( 'views.view_customers' ) }}';" class="btn btn-primary border rounded" type="button" style="margin-right: 35px;margin-left: 35px;margin-top: 10px;margin-bottom: 10px;filter: hue-rotate(0deg);height: 78px;font-size: 23px;font-weight: bold;background: var(--bs-green);"><svg class="bi bi-people-fill" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 15px;width: 30px;height: 30px;margin-top: -7px;">
+                            <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"></path>
+                            <path fill-rule="evenodd" d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z"></path>
+                            <path d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"></path>
+                    </svg>View Customers</button>
+                    <button onclick="window.location.href='{{ url_for( 'views.new_customer'  ) }}';" class="btn btn-primary border rounded" type="button" style="margin-right: 35px;margin-left: 35px;margin-top: 10px;margin-bottom: 10px;height: 78px;font-weight: bold;font-size: 23px;background: var(--bs-blue);"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" style="margin-right: 15px;height: 30px;width: 30px;margin-top: -10px;">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M8 11C10.2091 11 12 9.20914 12 7C12 4.79086 10.2091 3 8 3C5.79086 3 4 4.79086 4 7C4 9.20914 5.79086 11 8 11ZM8 9C9.10457 9 10 8.10457 10 7C10 5.89543 9.10457 5 8 5C6.89543 5 6 5.89543 6 7C6 8.10457 6.89543 9 8 9Z" fill="currentColor"></path>
+                            <path d="M11 14C11.5523 14 12 14.4477 12 15V21H14V15C14 13.3431 12.6569 12 11 12H5C3.34315 12 2 13.3431 2 15V21H4V15C4 14.4477 4.44772 14 5 14H11Z" fill="currentColor"></path>
+                            <path d="M18 7H20V9H22V11H20V13H18V11H16V9H18V7Z" fill="currentColor"></path>
+                    </svg>New Customer</button>
+                    <button onclick="window.location.href='{{ url_for( 'views.new_hospital'  ) }}';" class="btn btn-primary border rounded" type="button" style="margin-right: 35px;margin-left: 35px;margin-top: 10px;margin-bottom: 10px;filter: hue-rotate(0deg);height: 78px;font-size: 23px;font-weight: bold;background: var(--bs-blue);"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" style="margin-right: 15px;width: 30px;height: 30px;margin-top: -6px;">
+                            <path d="M12 6C12.5523 6 13 6.44772 13 7V11H17C17.5523 11 18 11.4477 18 12C18 12.5523 17.5523 13 17 13H13V17C13 17.5523 12.5523 18 12 18C11.4477 18 11 17.5523 11 17V13H7C6.44772 13 6 12.5523 6 12C6 11.4477 6.44772 11 7 11H11V7C11 6.44772 11.4477 6 12 6Z" fill="currentColor"></path>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M5 22C3.34315 22 2 20.6569 2 19V5C2 3.34315 3.34315 2 5 2H19C20.6569 2 22 3.34315 22 5V19C22 20.6569 20.6569 22 19 22H5ZM4 19C4 19.5523 4.44772 20 5 20H19C19.5523 20 20 19.5523 20 19V5C20 4.44772 19.5523 4 19 4H5C4.44772 4 4 4.44772 4 5V19Z" fill="currentColor"></path>
+                    </svg>New Hospital</button></div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

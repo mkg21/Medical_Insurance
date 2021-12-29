@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Homes{% endblock %}
+{% block content %}
+
+<div style="margin-right: 100px;margin-left: 100px;margin-top: 50px;margin-bottom: 50px;">
+    <div class="container text-center border rounded shadow justify-content-center" style="background: rgba(70,211,126,0.18);margin-top: 14px;padding-top: 37px;padding-bottom: 35px;width: 570.2px;margin-right: 1;padding-right: 60px;padding-left: 60px;"><label class="form-label text-center" style="font-family: Roboto, sans-serif;color: var(--bs-red);font-weight: bold;font-size: 18px;margin-bottom: 19px;">Hospital Information</label>
+        <form id="form1" method="post">
+            <div class="mb-3" style="min-width: 36px;padding-bottom: 10px;">
+                <div class="row" style="margin-left: -80px;">
+                    <div class="col" style="margin-right: -55px;"><label class="col-form-label">Name</label></div>
+                    <div class="col"><input class="form-control" type="text" name="name" placeholder="Hospital Name" required /></div>
+                </div>
+            </div>
+            <div class="mb-3" style="min-width: 36px;padding-bottom: 10px;">
+                <div class="row" style="margin-left: -80px;">
+                    <div class="col" style="margin-right: -55px;"><label class="col-form-label">Email Address</label></div>
+                    <div class="col"><input class="form-control" type="text" name="email" placeholder="Email Address" required pattern="^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$" /></div>
+                </div>
+            </div>
+            <div class="mb-3" style="min-width: 36px;padding-bottom: 10px;">
+                <div class="row" style="margin-left: -80px;">
+                    <div class="col" style="margin-right: -55px;"><label class="col-form-label">Address</label></div>
+                    <div class="col"><input class="form-control" type="text" name="address" placeholder="Address" required /></div>
+                </div>
+            </div>
+            <div class="mb-3" style="min-width: 36px;padding-bottom: 10px;">
+                <div class="row" style="margin-left: -80px;">
+                    <div class="col" style="margin-right: -55px;"><label class="col-form-label">Phone Number</label></div>
+                    <div class="col"><input class="form-control" type="text" name="phone" placeholder="Phone Number" required pattern="[0-9]{11}" minlength="11" maxlength="11" /></div>
+                </div>
+            </div>
+            <div class="mb-3" style="min-width: 36px;padding-bottom: 10px;">
+                <div class="row" style="margin-left: -80px;">
+                    <div class="col" style="margin-right: -55px;"><label class="col-form-label">Plans covered</label></div>
+                    <div class="col">
+                        {% for plan in plans %}
+                            <div class="form-check text-start" style="font-weight: bold;"><input name= {{ plan.type }}  value={{ plan.id }} id={{ plan.type }} class="form-check-input" type="checkbox" /><label style="color: darkred" class="form-check-label" for={{ plan.type }} >{{ plan.type.capitalize() }}</label></div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3" style="min-width: 36px;padding-bottom: 10px;"></div>
+        </form>
+        <div class="d-inline mb-3" style="width: 192.2px;min-width: 107px;padding-bottom: 10px;"><button class="btn btn-primary border rounded-pill border-primary shadow w-100" id="btn" type="submit" style="margin-top: 25px;" data-bs-target="#" data-bs-toggle="submit" form="form1">Register hospital</button></div>
+    </div>
+</div>
+{% endblock %}

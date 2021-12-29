@@ -1,0 +1,66 @@
+
+{% extends "base.html" %}
+{% block title %}Homes{% endblock %}
+{% block content %}
+
+<script>
+   function changeText (code) {
+       let cont_id = parseInt(code.value);
+       let plan_id = 0;
+       let text = '';
+       let plan_hos = {{ hospitals | tojson }};
+       let contracts = {{ contracts | tojson }};
+       for(let i in contracts){
+           console.log(contracts[i] + '  ggg');
+           if (parseInt(contracts[i][0]) === cont_id){
+               plan_id = contracts[i][1];
+               break;
+           }
+       }
+       let hospitals = plan_hos[plan_id];
+       for(let i in hospitals){
+           text += "<option style='font-size: 19px' value=" + hospitals[i][0] + " >" + hospitals[i][1] + "</option>";
+       }
+       document.getElementById('hos').innerHTML = text ;
+    }
+</script>
+
+
+<div class="d-lg-flex justify-content-center justify-content-lg-center" style="margin-right: 100px;margin-left: 100px;margin-top: 24px;margin-bottom: 50px;">
+    <div class="container text-center shadow" style="background: rgba(15,149,109,0.07);padding: 29px;border-radius: 14px;transform: scale(0.88);">
+        <div class="row" style="margin-top: -17px;padding-top: 51px;padding-bottom: 56px;border-top-color: var(--bs-cyan);">
+            <div class="col">
+                <form id="form1" class="text-center" method="post">
+                    <div class="card" style="background: rgba(255,193,7,0);">
+                        <h4 class="text-center" style="background: var(--bs-yellow);padding-bottom: 9px;padding-top: 6px;">File New Insurance Claim</h4>
+                        <div class="text-center justify-content-center"><label class="form-label" style="margin-top: 29px;font-weight: bold;font-size: 22px;color: var(--bs-red);">Beneficiary</label>
+                            <div class="d-flex justify-content-center"><select class="form-select" style="font-size: 19px; max-width: 428px;" name="ben" onchange="changeText(this);">
+                                {% for i in range(contracts|length) %}
+                                    <option style="font-size: 19px" value={{ contracts[i].id }} >{% if not contracts[i].dep_name %}Yourself{% else %}{{ contracts[i].dep_name + ', ' + contracts[i].kinship }}{% endif %}</option>
+                                {% endfor %}
+                                </select></div>
+                        </div>
+                        <div class="text-center justify-content-center"><label class="form-label" style="margin-top: 29px;font-weight: bold;font-size: 22px;color: var(--bs-red);">Hospital</label>
+                            <div class="d-flex justify-content-center"><select class="form-select" style="max-width: 428px;" id="hos" name="hos">
+
+                                {% for hos in hospitals[contracts[0].plan_id] %}
+                                    <option style="font-size: 19px"  value={{ hos.id }} >{{ hos.name }}</option>
+                                {% endfor %}
+                                </select></div>
+                        </div>
+                        <div><label class="form-label" style="margin-top: 29px;font-weight: bold;font-size: 22px;color: var(--bs-red);">Expanses Subject</label>
+                            <div class="d-flex d-xxl-flex justify-content-center justify-content-xxl-center"><input class="form-control" type="text" placeholder="write expanses subject" style="max-width: 428px;" required name="subject" /></div>
+                        </div>
+                        <div><label class="form-label" style="margin-top: 29px;font-weight: bold;font-size: 22px;color: var(--bs-red);">Expanses Amount</label>
+                            <div class="d-flex justify-content-center"><input class="form-control" type="number" min="0" placeholder="Enter expanses amount in EGP" style="max-width: 428px;" required name="amount" /></div>
+                        </div>
+                        <div><label class="form-label" style="margin-top: 29px;font-weight: bold;font-size: 22px;color: var(--bs-red);">Expanses Details</label><textarea class="form-control form-control-lg" style="height: 145px;" placeholder="write down expanses details here..." required minlength="1" maxlength="2048" name="details"></textarea></div>
+                    </div>
+                    <div></div>
+                    <div style="padding-top: 33px;"><button class="btn btn-success btn-lg" type="submit" form="form1">Submit</button></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
