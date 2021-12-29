@@ -23,7 +23,6 @@ def init_use_database():
     try:
         with connection.cursor() as cursor:
             cursor.execute(f"USE {database_name}")
-            cursor.execute(f"select * from customer")
     except Error:
         print(f'Creating Database {database_name}...')
         with open('website/database.sql', encoding='utf8') as file:

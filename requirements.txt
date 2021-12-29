@@ -12,3 +12,4 @@ python-socketio==4.6.0
 flask_cors
 gunicorn==20.1.0
 eventlet==0.30.2
+mysql-connector-python~=8.0.27
