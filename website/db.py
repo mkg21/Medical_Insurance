@@ -1,22 +1,22 @@
 from mysql.connector import connect, Error
 
-from .helpers import struct, age
+from .helpers import struct
 
-database_name = 'sql11461888'
 # database_name = 'sql11461888'
+database_name = 'sql11461888'
 # set to false after dev
 debug = True
 
-#connection = connect(
-#    host="localhost",
-#    user="os",
-#    password="PAss@2021"
-#)
 connection = connect(
-    host="sql11.freemysqlhosting.net",
-    user="sql11461888",
-    password="nB73iL28Xz"
+   host="localhost",
+   user="os",
+   password="PAss@2021"
 )
+# connection = connect(
+#     host="sql11.freemysqlhosting.net",
+#     user="sql11461888",
+#     password="nB73iL28Xz"
+# )
 
 
 def init_use_database():
@@ -110,7 +110,7 @@ def get_customer_purchases(cid):
 
 def get_claims_for_customer(cid):
     claims = read_db(
-        f"select * from claim where con_id in (select id from contract where cus_id={cid} or res_id={cid})")
+        f"select *, status is not null as is_resolved from claim where con_id in (select id from contract where cus_id={cid} or res_id={cid})")
     claims = [struct(c) for c in claims]
     claims.reverse()
     return claims
@@ -118,18 +118,18 @@ def get_claims_for_customer(cid):
 
 def get_unresolved_claims_for_customer(cid):
     claims = read_db(
-        f"select * from claim where con_id in (select id from contract where cus_id={cid} or res_id={cid}) and is_resolved=0")
+        f"select *, status is not null as is_resolved from claim where con_id in (select id from contract where cus_id={cid} or res_id={cid}) and status is null")
     claims = [struct(c) for c in claims]
     claims.reverse()
     return claims
 
 
-def mark_claim_as_resolved(cid):
-    return write_db(f"update claim set is_resolved = 1 where id = {cid};")
+def mark_claim_as_resolved(cid, accepted):
+    return write_db(f"update claim set status = {accepted} where id = {cid};")
 
 
 def get_claim(claim_id):
-    return struct(read_db(f"select * from claim where id={claim_id}", one=True))
+    return struct(read_db(f"select *, status is not null as is_resolved from claim where id={claim_id}", one=True))
 
 
 def get_customer_dependents(cid, include_plan=False):

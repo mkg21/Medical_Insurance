@@ -13,10 +13,10 @@
 </head>
 
 <body>
-    <header>
-        <div class="container" style="padding-top: 10px;">
-            <div class="row" style="border-radius: 34px;border-bottom: 2.4px solid var(--bs-pink);padding-bottom: 10px;">
-                <div class="col-md-4 d-flex d-md-flex justify-content-center justify-content-md-center"><a href="{{ url_for('views.home')}}"><img src="/static/img/LOGO.png" style="width: 80px;text-align: center;height: 80px;min-height: 80px;max-height: 80px;min-width: 80px;max-width: 80px;margin-top: -3px;"></a> </div>
+    <header style="background: rgb(236, 184, 7); height: 100px;">
+        <div class="container" style="padding-top: 15px;">
+            <div class="row" style="border-radius: 34px;padding-bottom: 10px;">
+                <div class="col-md-4 d-flex justify-content-center "><a href="{{ url_for('views.home')}}"><img src="/static/img/LOGO.png" style="width: 80px;text-align: center;height: 80px;min-height: 80px;max-height: 80px;min-width: 80px;max-width: 80px;margin-top: -3px;"></a> </div>
                 <div class="col-md-4">
                     <h1 onclick="window.location.href='{{ url_for( 'views.home'  ) }}';"  class="text-center d-flex justify-content-center" style="padding-top: 0;font-family: Arvo, serif;margin-top: 24px;font-size: 25.880000000000006px;">Insurance Portal</h1>
                 </div>
@@ -38,11 +38,11 @@
 </div>
 
 
-    <div style="margin-right: 100px;margin-left: 100px;margin-top: 50px;margin-bottom: 50px;">
+    <div style="margin-top: 50px;margin-bottom: 50px;">
         {% block content %}{% endblock %}
     </div>
-    <footer class="footer-basic">
-        <p class="copyright">Insurance Company Project</p>
+    <footer class="footer-basic" style="background-color: #ffffff;">
+        <p class="copyright" style="background-color: #ffffff;">Insurance Company Project</p>
     </footer>
     <script src="/static/bootstrap/js/bootstrap.min.js"></script>
 </body>

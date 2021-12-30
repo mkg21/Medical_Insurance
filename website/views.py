@@ -99,7 +99,7 @@ def new_hospital():
         plans = [request.form.get(i.type) for i in plans]
         plans_ids = [int(i) for i in plans if i]
 
-        if not(name and email and address and phone and plans_ids):
+        if not (name and email and address and phone and plans_ids):
             flash('Please enter all data!', 'danger')
             return redirect(url_for('views.new_hospital'))
 
@@ -159,17 +159,17 @@ def file_claim():
     contracts = [cus_con] + dep_con
 
     if request.method == 'POST':
-        con_id = int(request.form.get('ben'))
-        hos_id = int(request.form.get('hos'))
-        subject = request.form.get('subject')
-        amount = int(request.form.get('amount'))
-        details = request.form.get('details')
-
-        if not (con_id and hos_id and subject and amount and details):
-            flash('Please enter all data!', 'danger')
-            return redirect(url_for('views.file_claim'))
-
         try:
+            con_id = int(request.form.get('ben'))
+            hos_id = int(request.form.get('hos'))
+            subject = request.form.get('subject')
+            amount = int(request.form.get('amount'))
+            details = request.form.get('details')
+
+            if not (con_id and hos_id and subject and amount and details):
+                flash('Please enter all data!', 'danger')
+                return redirect(url_for('views.file_claim'))
+
             add_claim(con_id, hos_id, amount, subject, details)
             flash('Claim filed successfully!', 'success')
             return redirect(url_for('views.customer'))
@@ -186,8 +186,13 @@ def view_claim(cid):
     if request.method == 'POST':
         try:
             claim_id = int(request.form.get('claim_id'))
-            mark_claim_as_resolved(claim_id)
-            flash('Claim is marked as resolved', 'success')
+            status = request.form.get('action')
+            if status == 'accept':
+                flash('Claim is accepted and marked as resolved!', 'success')
+            if status == 'deny':
+                flash('Claim is denied and marked as resolved!', 'success')
+
+            mark_claim_as_resolved(claim_id, status == 'accept')
             redirect(url_for('views.view_claim', cid=cid))
         except:
             ...

@@ -77,7 +77,7 @@ CREATE TABLE claim
      expenses         DECIMAL(10, 2) NOT NULL,
      expenses_subject TEXT NOT NULL,
      expenses_details TEXT NOT NULL,
-     is_resolved      TINYINT NOT NULL,
+     status           TINYINT DEFAULT NULL,
      FOREIGN KEY (con_id) REFERENCES contract (id),
      FOREIGN KEY (hos_id) REFERENCES hospital (id)
   );
@@ -165,14 +165,14 @@ insert into enrolled values (8, 3);
 insert into enrolled values (10, 3);
 
 insert into claim values (DEFAULT, 1, 1, 2000, 'broken hand','covering 100% of the expenses', 0);
-insert into claim values (DEFAULT, 1, 1, 500 , 'fever','covering 100% of the expenses', 0);
+insert into claim values (DEFAULT, 1, 1, 500 , 'fever','covering 100% of the expenses', null);
 insert into claim values (DEFAULT, 1, 2, 200 , 'flu','covering 100% of the expenses', 1);
 insert into claim values (DEFAULT, 2, 3, 300 , 'gastroenteritis','covering 100% of the expenses', 0);
-insert into claim values (DEFAULT, 2, 1, 290 , 'asthma','covering 100% of the expenses', 0);
+insert into claim values (DEFAULT, 2, 1, 290 , 'asthma','covering 100% of the expenses', null);
 insert into claim values (DEFAULT, 3, 3, 4000, 'broken leg','covering 100% of the expenses', 0);
-insert into claim values (DEFAULT, 4, 3, 500 , 'fever','covering 100% of the expenses', 0);
-insert into claim values (DEFAULT, 4, 2, 480 , 'chest pain','covering 100% of the expenses', 0);
-insert into claim values (DEFAULT, 6, 3, 780 , 'flu','covering 100% of the expenses', 0);
+insert into claim values (DEFAULT, 4, 3, 500 , 'fever','covering 100% of the expenses', null);
+insert into claim values (DEFAULT, 4, 2, 480 , 'chest pain','covering 100% of the expenses', null);
+insert into claim values (DEFAULT, 6, 3, 780 , 'flu','covering 100% of the expenses', null);
 insert into claim values (DEFAULT, 6, 3, 2300, 'broken leg','covering 100% of the expenses', 0);
 insert into claim values (DEFAULT, 10, 2, 2000, 'asthma','covering 100% of the expenses',0);
 insert into claim values (DEFAULT, 6, 1, 700 , 'cold','covering 100% of the expenses', 1);

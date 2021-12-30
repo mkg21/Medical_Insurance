@@ -13,9 +13,9 @@
                 <div class="col">
                     <div class="row">
                         <div class="col-md-12 text-center">
-                            <h2 class="text-center" style="background: rgba(32,201,151,0.3);padding: 9px;padding-bottom: 13px;margin-bottom: 18px;color: var(--bs-red);font-size: 27px;">
+                            <h2 class="text-center" style="padding: 9px 9px 13px;margin-bottom: 18px;color: var(--bs-red);font-size: 27px;">
+                            {% if person.plan.id %}
                                 Available hospitals for your {% if not person.f_name %}{{ person.kinship.lower() }} {{ person.name }}'s{% endif %} plan ({{ person.plan.type }})<br /></h2>
-
                             {% for hospital in hospitals[person.plan.id|int] %}
                                 <div class="card">
                                     <div class="card-body">
@@ -27,6 +27,12 @@
                                     </div>
                                 </div>
                             {% endfor %}
+                            {% else %}
+                                {% if not person.f_name %}Your {{ person.kinship.lower() }} {{ person.name }} is not enrolled in any plan
+                                {% else %}
+                                    You are not enrolled in any plan
+                                {% endif %}
+                            {% endif %}
                         </div>
                     </div>
                 </div>

@@ -3,104 +3,122 @@
 {% block content %}
 <div>
 
-    <div style="margin-top: -60px;">
-        <div class="d-lg-flex justify-content-center justify-content-lg-center" style="margin-right: 50px;margin-left: 50px;margin-bottom: 50px;transform: scale(0.8);">
+    <div style="">
+        <div class="d-flex justify-content-center" style="margin-right: 50px;margin-left: 50px;margin-bottom: 50px">
             <div class="container shadow" style="background: rgba(220,53,73,0.07);padding: 29px;border-radius: 14px;">
                 <div>
-                    <div class="row" style="margin-top: -17px;padding-top: 51px;padding-bottom: -8px;border-top-color: var(--bs-cyan);">
+                    <div class="row">
                         <div class="col">
-                            <div class="row" style="margin-bottom: 20px;">
+                            <div class="row" style="margin-bottom: 40px;">
                                 <div class="col-md-12 text-center">
-                                    <h2 class="text-center" style="background: rgba(32,201,151,0.3);padding: 9px 9px 13px;margin-bottom: 18px;color: var(--bs-indigo);font-size: 27px;font-weight: bold;">Customer Details</h2>
+                                    <h2 class="text-center" style="font-size: 22px;font-weight: bold;color: navy;">Customer Details</h2>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row" style="margin-bottom: 13px;">
-                    <div class="col">
+                    <div class="col-xs-6 col-sm-6">
                         <div class="row" style="padding-bottom: 8px;">
-                            <div class="col text-end d-flex justify-content-start align-items-center" style="width: 84.3px;min-width: 84.3px;max-width: 84.3px;">
-                                <h4 class="text-start" style="color: navy;width: 110.3px;margin-top: 0px;">Name:</h4>
+                            <div class="col-xs-6 col-sm-6 text-end d-flex justify-content-start align-items-center" style="width: 84px;min-width: 84px;">
+                                <p class="text-start" style="color: navy;width: 110px; font-weight: bold;">Name:</p>
                             </div>
                             <div class="col">
                                 <div class="card">
-                                    <div class="card-body" style="width: 456px;padding: 8px 7px 3px 26px;min-width: 456px;max-width: 456.3px;">
-                                        <h4 class="card-title">{{ cus.f_name.capitalize() }} {{ cus.m_name }} {{ cus.l_name }}</h4>
+                                    <div class="card-body" style="padding: 8px 7px 3px 26px;">
+                                        <p class="card-title" style="font-size: 20px">{{ cus.f_name.capitalize() }} {{ cus.m_name }} {{ cus.l_name }}</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col-xs-6 col-sm-6">
                         <div class="row" style="padding-bottom: 8px;">
-                            <div class="col text-end d-flex justify-content-start align-items-center" style="width: 84.3px;min-width: 84.3px;max-width: 84.3px;">
-                                <h4 class="text-start" style="color: navy;width: 110.3px;margin-top: 0px;">gender</h4>
+                            <div class="col-xs-6 col-sm-6 text-end d-flex justify-content-start align-items-center" style="width: 84px;min-width: 84px;">
+                                <p class="text-start" style="color: navy;width: 110px; font-weight: bold;">Plan:</p>
                             </div>
                             <div class="col">
                                 <div class="card">
-                                    <div class="card-body" style="width: 456.3px;padding: 7px;padding-left: 26px;padding-top: 8px;padding-bottom: 3px;min-width: 456.3px;max-width: 456.3px;">
-                                        <h4 class="card-title">{{ cus.gender }}</h4>
+                                    <div class="card-body" style="padding: 8px 7px 3px 26px;">
+                                        <p class="card-title" style="font-size: 20px">
+                                                {% if  cus.plan %}
+                                                    {{ cus.plan.type }}
+                                                {% else %}
+                                                    not enrolled in any plan.
+                                                {% endif %}
+                                        </p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row" style="margin-bottom: 13px;">
-                    <div class="col">
+                    <div class="col-xs-6 col-sm-6">
                         <div class="row" style="padding-bottom: 8px;">
-                            <div class="col text-end d-flex justify-content-start align-items-center" style="width: 84.3px;min-width: 84.3px;max-width: 84.3px;">
-                                <h4 class="text-start" style="color: navy;width: 110.3px;margin-top: 0px;">Age:</h4>
+                            <div class="col-xs-6 col-sm-6 text-end d-flex justify-content-start align-items-center" style="width: 84px;min-width: 84px;">
+                                <p class="text-start" style="color: navy;width: 110px; font-weight: bold;">Phone:</p>
                             </div>
                             <div class="col">
                                 <div class="card">
-                                    <div class="card-body" style="width: 456.3px;padding: 7px;padding-left: 26px;padding-top: 8px;padding-bottom: 3px;min-width: 456.3px;max-width: 456.3px;">
-                                        <h4 class="card-title">{{ cus.age | int}}</h4>
+                                    <div class="card-body" style="padding: 8px 7px 3px 26px;">
+                                        <p class="card-title" style="font-size: 20px">{{ cus.phone }}</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row" style="padding-bottom: 14px;margin-top: 10px;">
-                                <div class="col text-end d-flex justify-content-start align-items-center" style="width: 84.3px;min-width: 84.3px;max-width: 84.3px;">
-                                    <h4 class="text-start" style="color: navy;width: 110.3px;margin-top: 0px;">Plan:</h4>
-                                </div>
-                                <div class="col">
-                                    <div class="card">
-                                        <div class="card-body" style="width: 500.3px;padding: 7px;padding-left: 26px;padding-top: 8px;padding-bottom: 3px;min-width: 456.3px;max-width: 456.3px;">
-                                            <h4 class="card-title">{{ cus.plan.type }}</h4>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                     </div>
-                    <div class="col">
+                    <div class="col-xs-6 col-sm-6">
                         <div class="row" style="padding-bottom: 8px;">
-                            <div class="col text-end d-flex justify-content-start align-items-center" style="width: 84.3px;min-width: 84.3px;max-width: 84.3px;">
-                                <h4 class="text-start" style="color: navy;width: 110.3px;margin-top: 0px;">Email:</h4>
+                            <div class="col-xs-6 col-sm-6 text-end d-flex justify-content-start align-items-center" style="width: 84px;min-width: 84px;">
+                                <p class="text-start" style="color: navy;width: 110px; font-weight: bold;">Gender:</p>
                             </div>
                             <div class="col">
                                 <div class="card">
-                                    <div class="card-body" style="width: 456.3px;padding: 7px;padding-left: 26px;padding-top: 8px;padding-bottom: 3px;min-width: 456.3px;max-width: 456.3px;">
-                                        <h4 class="card-title">{{ cus.e_mail }}</h4>
+                                    <div class="card-body" style="padding: 8px 7px 3px 26px;">
+                                        <p class="card-title" style="font-size: 20px">{{ cus.gender }}</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row" style="margin-bottom: 13px;">
-                    <div class="col" style="min-width: 107.3px;max-width: 139.3px;">
-                        <div class="row" style="padding-bottom: 8px;min-width: 107.3px;max-width: 107.3px;width: 107.3px;">
-                            <div class="col" style="width: 107.3px;min-width: 107.3px;max-width: 110.3px;">
-                                <h4 class="text-start" style="color: navy;width: 100.3px;margin-top: 5px;">Address:</h4>
+                    <div class="col-xs-6 col-sm-6">
+                        <div class="row" style="padding-bottom: 8px;">
+                            <div class="col-xs-6 col-sm-6 text-end d-flex justify-content-start align-items-center" style="width: 84px;min-width: 84px;">
+                                <p class="text-start" style="color: navy;width: 110px; font-weight: bold;">Address:</p>
+                            </div>
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-body" style="padding: 8px 7px 3px 26px;">
+                                        <p class="card-title" style="font-size: 20px">{{ cus.address }}</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col" style="">
-                        <div class="card">
-                            <div class="card-body" style="width: 456.3px;padding: 7px;padding-left: 26px;padding-top: 8px;padding-bottom: 3px;">
-                                <h4 class="card-title">{{ cus.address }}</h4>
+                    <div class="col-xs-6 col-sm-6">
+                        <div class="row" style="padding-bottom: 8px;">
+                            <div class="col-xs-6 col-sm-6 text-end d-flex justify-content-start align-items-center" style="width: 84px;min-width: 84px;">
+                                <p class="text-start" style="color: navy;width: 110px; font-weight: bold;">Age:</p>
+                            </div>
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-body" style="padding: 8px 7px 3px 26px;">
+                                        <p class="card-title" style="font-size: 20px">{{ cus.age|int }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-6">
+                        <div class="row" style="padding-bottom: 8px;">
+                            <div class="col-xs-6 col-sm-6 text-end d-flex justify-content-start align-items-center" style="width: 84px;min-width: 84px;">
+                                <p class="text-start" style="color: navy;width: 110px; font-weight: bold;">Email:</p>
+                            </div>
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-body" style="padding: 8px 7px 3px 26px;">
+                                        <p class="card-title" style="font-size: 20px">{{ cus.e_mail }}</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -109,33 +127,34 @@
             <br>
                     <div class="col">
                         {% if deps|length %}
-                            <h3 class="text-center cen" style="text-align: center; color:navy ;padding-bottom: 20px;">Dependents</h3>
+                            <p class="text-center cen" style="font-size: 22px;text-align: center; color:navy ;padding-bottom: 10px;">Dependents</p>
                         {% else %}
-                            <h4 class="text-center cen" style="text-align: center; color:navy ;padding-bottom: 20px;">Customer has no dependents.</h4>
+                            <p class="text-center cen" style="text-align: center; color:navy ;padding-bottom: 20px;">Customer has no dependents.</p>
                         {% endif %}
                     </div>
                 <div class="row" style="margin-bottom: 13px;">
                     <div class="col" style="width: 595.2px;min-width: 648px;">
                         {% for dep in deps %}
                             <div class="card" style="">
-                                <div class="card-body" style="width: 456.3px;padding: 7px;padding-left: 26px;padding-top: 8px;padding-bottom: 3px;">
-                                    <h4 class="card-title" style="width: 179%;">
+                                <div class="card-body" style="padding: 8px 7px 3px 26px;">
+                                    <p class="card-title" style="width: 179%; font-size: 20px">
                                         {{ dep.name.capitalize() }} - {% if cus.gender.lower() == 'male' %}his{% else %}her {% endif %}
-                                        {{ dep.kinship }} - {{ dep.age|int}} years old - enrolled in {{ dep.plan.type }} plan <br /></h4>
+                                        {{ dep.kinship }} - {{ dep.age|int}} years old - enrolled in {{ dep.plan.type }} plan <br /></p>
                                 </div>
                             </div>
                         {% endfor %}
                     </div>
                 </div>
-                <div class="d-flex d-xxl-flex justify-content-center justify-content-xxl-center" style="padding-top: 67px;padding-left: 4px;padding-bottom: 33px;">
-                    <div class="row" style="margin-bottom: 13px;max-width: 1161px;width: 1088.8px;">
-                        <div class="col text-end d-flex d-xl-flex justify-content-start align-items-center align-items-xl-center justify-content-xxl-end" style="min-width: 300px;width: 300px;max-width: 300px;">
-                            <h1 style="font-size: 27px;text-align: center;width: 300px;min-width: 300px;max-width: 300px;"></h1>
-                        </div>
-                        <div class="col text-center d-flex">
-                           <a href="{{ url_for('views.view_claims', id=cus.id) }}"><button class="btn btn-primary border rounded" type="button" style="margin-right: 5px;margin-left: 5px;height: 60px;font-size: 22px;background: var(--bs-blue);" >View all claims</button></a><a href="{{ url_for('views.view_claims', id=cus.id) + "?unresolved=1" }}"><button class="btn btn-primary border rounded" type="button" style="margin-right: 5px;margin-left: 5px;height: 60px;font-size: 22px;background: var(--bs-blue);">View unresolved claims</button></a></div>
-                        </div>
-                    </div>
+            <br>
+            <br>
+            <br>
+
+                <div class="d-flex justify-content-center">
+                    <button onclick="window.location.href='{{ url_for('views.view_claims', id=cus.id) }}';" class="btn btn-primary" type="button" style="width: 189px;height: 44px;background: rgb(25,64,123);margin-right: 11px;">View all claims</button>
+                    <button onclick="window.location.href='{{ url_for('views.view_claims', id=cus.id) + "?unresolved=1" }}';" class="btn btn-primary" type="button" style="width: 197px;height: 44px;background: rgb(25,64,123);margin-left: 11px;">View unresolved claims</button>
+                </div>
+            <br>
+            <br>
                 </div>
             </div>
         </div>

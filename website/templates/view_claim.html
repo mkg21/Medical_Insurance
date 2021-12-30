@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% block title %}Homes{% endblock %}
 {% block content %}
-<div class="d-lg-flex justify-content-center justify-content-lg-center" style="margin-right: 100px;margin-left: 100px;margin-top: 0px;margin-bottom: 50px;">
-    <div class="container text-center shadow" style="background: rgba(15,149,109,0.07);padding: 29px;border-radius: 14px;transform: scale(0.88);">
+<div class="d-lg-flex justify-content-center justify-content-lg-center" style="margin-top: 0px;margin-bottom: 50px;">
+    <div class="container text-center shadow" style="background: rgba(15,149,109,0.07);border-radius: 14px;transform: scale(0.88);">
         <div class="row" style="margin-top: -17px;padding-top: 51px;padding-bottom: 56px;border-top-color: var(--bs-cyan);">
             <div class="col">
                 <form id="form1" class="text-center" method="post">
@@ -27,7 +27,13 @@
                                         <div class="card">
                                             <div class="card-body">
                                                 <header></header>
-                                                <h5 style="margin-bottom: 0; width:300px;">{% if claim.is_resolved %}resolved{% else %}not resolved{% endif %}</h5>
+                                                {% if not claim.is_resolved %}
+                                                    <h5 style=" margin-bottom: 0; width:300px;">Not resolved</h5>
+                                                {% elif claim.status %}
+                                                    <h5 style="color:darkblue ; margin-bottom: 0; width:300px;">Accepted</h5>
+                                                {% else %}
+                                                    <h5 style="color: red ; margin-bottom: 0; width:300px;">Denied</h5>
+                                                {% endif %}
                                             </div>
                                         </div>
                                     </div>
@@ -86,11 +92,27 @@
                                 </div>
                             </div>
                         </div>
+                    <div class="row">
+                        <div class="col">
+                                <div><label class="form-label" style="margin-top: 29px;font-weight: bold;font-size: 22px;color: var(--bs-red);">Covered Expenses (EGP)</label>
+                                    <div class="d-flex justify-content-center">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <header></header>
+                                                <h5 style="margin-bottom: 0; width:300px;">{{ claim.covered_expenses }}</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
                         <div><label class="form-label" style="margin-top: 29px;font-weight: bold;font-size: 22px;color: var(--bs-red);">Expanses Details</label><textarea class="form-control form-control-lg" style="height: 145px;" required minlength="1" maxlength="2048" name="details" readonly>{{ claim.expenses_details }}</textarea></div>
                     </div>
                     <div></div>
                     {% if not claim.is_resolved and not is_cus%}
-                        <div style="padding-top: 33px;"><button class="btn btn-success btn-lg" type="submit" form="form1">Mark as resolved</button></div>
+                        <div style="padding-top: 33px;">
+                            <button name="action" value="accept" style="margin-right: 16px" class="btn btn-success btn-lg" type="submit" form="form1">Accept</button>
+                            <button name="action" value="deny" class="btn btn-danger btn-lg" type="submit" form="form1">Deny</button></div>
                     {% endif %}
                     <input type="hidden" value={{ claim.id }} name="claim_id"/>
                 </form>
