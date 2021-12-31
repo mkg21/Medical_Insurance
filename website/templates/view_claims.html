@@ -34,8 +34,8 @@
                 {% else %}
                     <div style="text-align:center"><h4>Customer didn't file any claims.</h4></div>
                 {% endif %}
-            {% endif %}
 
+            {% else %}
 
             <div class="d-flex d-sm-flex d-md-flex d-lg-flex d-xl-flex d-xxl-flex justify-content-center">
                 <div class="row" style="width: 938.6px;">
@@ -48,6 +48,7 @@
                 </div>
             </div>
 
+            {% endif %}
 
             {% for claim in claims %}
                 <div class="d-flex d-sm-flex d-md-flex d-lg-flex d-xl-flex d-xxl-flex justify-content-center">

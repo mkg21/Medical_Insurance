@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from mysql.connector import connect, Error
 
 from .struct import struct
@@ -6,7 +8,7 @@ from .struct import struct
 database_name = 'medical_insurance'
 
 # set to false after dev
-debug = False
+debug = True
 
 connection = connect(
     host="localhost",
@@ -108,7 +110,7 @@ def get_claims_for_customer(cid):
     claims = read_db(
         f"select *, status is not null as is_resolved from claim where con_id in (select id from contract where cus_id={cid} or res_id={cid})")
     claims = [struct(c) for c in claims]
-    claims.reverse()
+    claims.sort(key=lambda c: c.date, reverse=True)
     return claims
 
 
@@ -116,7 +118,7 @@ def get_unresolved_claims_for_customer(cid):
     claims = read_db(
         f"select *, status is not null as is_resolved from claim where con_id in (select id from contract where cus_id={cid} or res_id={cid}) and status is null")
     claims = [struct(c) for c in claims]
-    claims.reverse()
+    claims.sort(key=lambda c: c.date, reverse=True)
     return claims
 
 
@@ -187,7 +189,7 @@ def add_contract_dependent(res_id, name, kinship, plan_id, payment_method='visa'
 
 def add_claim(con_id, hos_id, expenses, subject, details):
     return write_db(
-        f"insert into claim values (DEFAULT, {con_id}, {hos_id}, {expenses}, '{subject}', '{details}' , 0);")
+        f"insert into claim values (DEFAULT, {con_id}, {hos_id}, {expenses}, '{subject}', '{details}' , null, '{datetime.today().date()}');")
 
 
 def enroll_hospital_in_plans(hos_id, plans_ids):

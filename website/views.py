@@ -97,7 +97,9 @@ def new_hospital():
         phone = request.form.get('phone')
 
         plans = [request.form.get(i.type) for i in plans]
+        print(plans)
         plans_ids = [int(i) for i in plans if i]
+
 
         if not (name and email and address and phone and plans_ids):
             flash('Please enter all data!', 'danger')

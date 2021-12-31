@@ -12,21 +12,29 @@
             <div class="row" style="margin-top: -17px;padding-top: 51px;padding-bottom: 56px;border-top-color: var(--bs-cyan);">
                 <div class="col">
                     <div class="row">
-                        <div class="col-md-12 text-center">
-                            <h2 class="text-center" style="padding: 9px 9px 13px;margin-bottom: 18px;color: #15674f;font-size: 27px;">
+                        <div class="col-md-12 ">
+                            <h5 class="text-center" style="padding: 9px 9px 13px;margin-bottom: 18px;color: #bf003e;">
                             {% if person.plan.id %}
-                                Available hospitals for your {% if not person.f_name %}{{ person.kinship.lower() }} {{ person.name }}'s{% endif %} plan ({{ person.plan.type }})<br /></h2>
-                            {% for hospital in hospitals[person.plan.id|int] %}
-                                <div class="card">
+                                Available hospitals for your {% if not person.f_name %}{{ person.kinship.lower() }} {{ person.name }}'s{% endif %} plan ({{ person.plan.type }})<br /></h5>
+                                    <div class="about-border"></div>
                                     <div class="card-body">
-                                        <h5  style="color:#000066 ;text-align: left; float: left; width: 20%;">{{ hospital.name }}</h5>
-                                        <h5  style="color:#660033 ;text-align: left; float: right; width: 55%;">address:&nbsp;  {{ hospital.address }}</h5>
-                                        <h5  style="color:darkred ;text-align: left; float: right; width: 25%;">contact:&nbsp;  {{ hospital.phone }}</h5>
-
-
+                                        <p  style="font-size: 20px; font-weight: bold;color:#000066 ;text-align: left; float: left; width: 20%;">Name</p>
+                                        <p  style="font-size: 20px; font-weight: bold;color:#660033 ;text-align: left; float: right; width: 55%;">Address</p>
+                                        <p  style="font-size: 20px; font-weight: bold;color:darkred ;text-align: left; float: right; width: 25%;">Contact</p>
                                     </div>
-                                </div>
+                            <ul class="list-group" style="width: 100%;">
+                            {% for hospital in hospitals[person.plan.id|int] %}
+
+                                    <li class="list-group-item">
+                                        <p  style="font-size: 20px; color:#000066 ;text-align: left; float: left; width: 20%;">{{ hospital.name }}</p>
+                                        <p  style="font-size: 20px; color:#660033 ;text-align: left; float: right; width: 55%;">{{ hospital.address }}</p>
+                                        <p  style="font-size: 20px; color:darkred ;text-align: left; float: right; width: 25%;">{{ hospital.phone }}</p>
+
+
+                                    </li>
+
                             {% endfor %}
+                            </ul>
                             {% else %}
                                 {% if not person.f_name %}Your {{ person.kinship.lower() }} {{ person.name }} is not enrolled in any plan
                                 {% else %}
