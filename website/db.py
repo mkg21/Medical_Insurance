@@ -2,30 +2,30 @@ from mysql.connector import connect, Error
 
 from .helpers import struct
 
-# database_name = 'sql11461888'
-database_name = 'medical_insurance'
+database_name = 'sql11462345'
+# database_name = 'medical_insurance'
 
 # set to false after dev
-debug = True
-
-connection = connect(
-    host="localhost",
-    user="os",
-    password="PAss@2021"
-)
-
+debug = False
 
 # connection = connect(
-#     host="sql11.freemysqlhosting.net",
-#     user="sql11461888",
-#     password="nB73iL28Xz"
+#     host="localhost",
+#     user="os",
+#     password="PAss@2021"
 # )
+
+
+connection = connect(
+    host="sql11.freemysqlhosting.net",
+    user="sql11462345",
+    password="5EV8WpVFBh"
+)
 
 
 def init_use_database():
     try:
         with connection.cursor() as cursor:
-            cursor.execute(f"USE {database_name}")
+            cursor.execute(f"USE d{database_name}")
     except Error:
         print(f'Creating Database {database_name}...')
         with open('website/database.sql', encoding='utf8') as file:
