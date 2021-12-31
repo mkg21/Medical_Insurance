@@ -10,7 +10,7 @@
                         <h4 class="text-center" style="background: var(--bs-yellow);padding-bottom: 9px;padding-top: 6px;">Insurance Claim info</h4>
                         <div class="row">
                             <div class="col">
-                                <div class="text-center justify-content-center"><label class="form-label" style="margin-top: 29px;font-weight: bold;font-size: 22px;color: var(--bs-red);">Filed by</label>
+                                <div class="text-center justify-content-center"><label class="form-label" style="margin-top: 29px;font-weight: bold;font-size: 22px;color: #15674f;">Filed by</label>
                                     <div class="d-flex justify-content-center">
                                         <div class="card">
                                             <div class="card-body">
@@ -22,7 +22,7 @@
                                 </div>
                             </div>
                             <div class="col">
-                                <div class="text-center justify-content-center"><label class="form-label" style="margin-top: 29px;font-weight: bold;font-size: 22px;color: var(--bs-red);">Status</label>
+                                <div class="text-center justify-content-center"><label class="form-label" style="margin-top: 29px;font-weight: bold;font-size: 22px;color: #15674f;">Status</label>
                                     <div class="d-flex justify-content-center">
                                         <div class="card">
                                             <div class="card-body">
@@ -42,7 +42,7 @@
                         </div>
                         <div class="row">
                             <div class="col">
-                                <div class="text-center justify-content-center"><label class="form-label" style="margin-top: 29px;font-weight: bold;font-size: 22px;color: var(--bs-red);">Hospital</label>
+                                <div class="text-center justify-content-center"><label class="form-label" style="margin-top: 29px;font-weight: bold;font-size: 22px;color: #15674f;">Hospital</label>
                                     <div class="d-flex justify-content-center">
                                         <div class="card">
                                             <div class="card-body">
@@ -54,7 +54,7 @@
                                 </div>
                             </div>
                             <div class="col">
-                                <div><label class="form-label" style="margin-top: 29px;font-weight: bold;font-size: 22px;color: var(--bs-red);">Expanses Subject</label>
+                                <div><label class="form-label" style="margin-top: 29px;font-weight: bold;font-size: 22px;color: #15674f;">Expanses Subject</label>
                                     <div class="d-flex d-xxl-flex justify-content-center justify-content-xxl-center">
                                         <div class="card">
                                             <div class="card-body">
@@ -68,7 +68,7 @@
                         </div>
                         <div class="row">
                             <div class="col">
-                                <div><label class="form-label" style="margin-top: 29px;font-weight: bold;font-size: 22px;color: var(--bs-red);">Beneficiary</label>
+                                <div><label class="form-label" style="margin-top: 29px;font-weight: bold;font-size: 22px;color: #15674f;">Beneficiary</label>
                                     <div class="d-flex justify-content-center">
                                         <div class="card">
                                             <div class="card-body">
@@ -80,7 +80,7 @@
                                 </div>
                             </div>
                             <div class="col">
-                                <div><label class="form-label" style="margin-top: 29px;font-weight: bold;font-size: 22px;color: var(--bs-red);">Expanses Amount (EGP)</label>
+                                <div><label class="form-label" style="margin-top: 29px;font-weight: bold;font-size: 22px;color: #15674f;">Expanses Amount (EGP)</label>
                                     <div class="d-flex justify-content-center">
                                         <div class="card">
                                             <div class="card-body">
@@ -94,19 +94,23 @@
                         </div>
                     <div class="row">
                         <div class="col">
-                                <div><label class="form-label" style="margin-top: 29px;font-weight: bold;font-size: 22px;color: var(--bs-red);">Covered Expenses (EGP)</label>
+                                <div><label class="form-label" style="margin-top: 29px;font-weight: bold;font-size: 22px;color: #15674f;">Filed Date</label>
                                     <div class="d-flex justify-content-center">
                                         <div class="card">
                                             <div class="card-body">
                                                 <header></header>
-                                                <h5 style="margin-bottom: 0; width:300px;">{{ claim.covered_expenses }}</h5>
+                                                <h5 style="margin-bottom: 0; width:300px;">{{ claim.date }}</h5>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                        <div class="col">
+
+                        </div>
                     </div>
-                        <div><label class="form-label" style="margin-top: 29px;font-weight: bold;font-size: 22px;color: var(--bs-red);">Expanses Details</label><textarea class="form-control form-control-lg" style="height: 145px;" required minlength="1" maxlength="2048" name="details" readonly>{{ claim.expenses_details }}</textarea></div>
+                    <br>
+                        <div><label class="form-label" style="margin-top: 29px;font-weight: bold;font-size: 22px;color: #15674f;">Expanses Details</label><textarea class="form-control form-control-lg" style="height: 145px;" required minlength="1" maxlength="2048" name="details" readonly>{{ claim.expenses_details }}</textarea></div>
                     </div>
                     <div></div>
                     {% if not claim.is_resolved and not is_cus%}

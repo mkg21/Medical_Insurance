@@ -7,7 +7,7 @@
         <div class="d-lg-flex justify-content-lg-center"></div>
     </div>
     <div class="d-lg-flex justify-content-center justify-content-lg-center" style="margin-right: 100px;margin-left: 100px;margin-top: 24px;margin-bottom: 50px;">
-        <div class="container shadow" style="background: rgba(220,53,73,0.07);padding: 29px;border-radius: 14px;">
+        <div class="container shadow" style="background: rgba(70,211,126,0.18);padding: 29px;border-radius: 14px;">
             <div class="row" style="margin-top: -17px;padding-top: 51px;padding-bottom: 56px;border-top-color: var(--bs-cyan);">
                 <div class="col">
                     <div class="row">
@@ -24,7 +24,7 @@
                                                     <div style="padding-bottom: 20px;padding-top: 47px;">
                                                         <div class="row" style="margin-left: -80px;">
                                                             <div class="col text-end" style="margin-right: 0;padding-bottom: 0;"><label class="col-form-label" style="font-weight: bold;">Beneficiary</label></div>
-                                                            <div class="col"><select name="ben" class="form-select form-select-sm" style="font-size: 17px;color: var(--bs-red);font-weight: bold;width: 271.2px;" name="plan" required>
+                                                            <div class="col"><select name="ben" class="form-select form-select-sm" style="font-size: 17px;color: #15674f;font-weight: bold;width: 271.2px;" name="plan" required>
                                                                     <option value="cus,{{ cus_id }}" selected style="color: #8B8676;font-weight: bold;">You</option>
                                                                 {% for dep in dependents %}
                                                                     <option value="dep,{{ dep['cus_id'] }},{{ dep['name'] }},{{ dep['kinship'] }}" style="color: #1DA7EE;font-weight: bold;">{{ dep['kinship'].capitalize() }}, {{  dep['name'].capitalize() }} - {{  dep['plan'] }}</option>
@@ -35,7 +35,7 @@
                                                     <div style="padding-bottom: 20px;">
                                                         <div class="row" style="margin-left: -80px;">
                                                             <div class="col" style="margin-right: 0;text-align: right;width: 528.1px;"><label class="col-form-label" style="font-weight: bold;">Plan</label></div>
-                                                            <div class="col"><select name="plan" class="form-select form-select-sm" style="font-size: 17px;color: var(--bs-red);font-weight: bold;width: 138.2px;" name="plan" required>
+                                                            <div class="col"><select name="plan" class="form-select form-select-sm" style="font-size: 17px;color: #15674f;font-weight: bold;width: 138.2px;" name="plan" required>
                                                                 {% for i in plans %}
                                                                     <option value="{{ i.id }}" selected style="font-weight: bold;">{{ i.type }}</option>
                                                                 {% endfor %}

@@ -86,7 +86,7 @@ def new_dependent():
     return render_template('new_dependent.html', plans=get_plans(get_hos_num=True))
 
 
-@views.route('/new_hospital', methods=['POST', 'GET'])
+@views.route('/admin/new_hospital', methods=['POST', 'GET'])
 def new_hospital():
     global curr_cus
     plans = get_plans()

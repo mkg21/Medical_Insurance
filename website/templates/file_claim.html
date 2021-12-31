@@ -33,14 +33,14 @@
                 <form id="form1" class="text-center" method="post">
                     <div class="card" style="background: rgba(255,193,7,0);">
                         <h4 class="text-center" style="background: var(--bs-yellow);padding-bottom: 9px;padding-top: 6px;">File New Insurance Claim</h4>
-                        <div class="text-center justify-content-center"><label class="form-label" style="margin-top: 29px;font-weight: bold;font-size: 22px;color: var(--bs-red);">Beneficiary</label>
+                        <div class="text-center justify-content-center"><label class="form-label" style="margin-top: 29px;font-weight: bold;font-size: 22px;color: #15674f;">Beneficiary</label>
                             <div class="d-flex justify-content-center"><select class="form-select" style="font-size: 19px; max-width: 428px;" name="ben" onchange="changeText(this);">
                                 {% for i in range(contracts|length) %}
                                     <option style="font-size: 19px" value={{ contracts[i].id }} >{% if not contracts[i].dep_name %}Yourself{% else %}{{ contracts[i].dep_name + ', ' + contracts[i].kinship }}{% endif %}</option>
                                 {% endfor %}
                                 </select></div>
                         </div>
-                        <div class="text-center justify-content-center"><label class="form-label" style="margin-top: 29px;font-weight: bold;font-size: 22px;color: var(--bs-red);">Hospital</label>
+                        <div class="text-center justify-content-center"><label class="form-label" style="margin-top: 29px;font-weight: bold;font-size: 22px;color: #15674f;">Hospital</label>
                             <div class="d-flex justify-content-center"><select class="form-select" style="max-width: 428px;" id="hos" name="hos">
 
                                 {% for hos in hospitals[contracts[0].plan_id] %}
@@ -48,13 +48,13 @@
                                 {% endfor %}
                                 </select></div>
                         </div>
-                        <div><label class="form-label" style="margin-top: 29px;font-weight: bold;font-size: 22px;color: var(--bs-red);">Expanses Subject</label>
+                        <div><label class="form-label" style="margin-top: 29px;font-weight: bold;font-size: 22px;color: #15674f;">Expanses Subject</label>
                             <div class="d-flex d-xxl-flex justify-content-center justify-content-xxl-center"><input class="form-control" type="text" placeholder="write expanses subject" style="max-width: 428px;" required name="subject" /></div>
                         </div>
-                        <div><label class="form-label" style="margin-top: 29px;font-weight: bold;font-size: 22px;color: var(--bs-red);">Expanses Amount</label>
+                        <div><label class="form-label" style="margin-top: 29px;font-weight: bold;font-size: 22px;color: #15674f;">Expanses Amount</label>
                             <div class="d-flex justify-content-center"><input class="form-control" type="number" min="0" placeholder="Enter expanses amount in EGP" style="max-width: 428px;" required name="amount" /></div>
                         </div>
-                        <div><label class="form-label" style="margin-top: 29px;font-weight: bold;font-size: 22px;color: var(--bs-red);">Expanses Details</label><textarea class="form-control form-control-lg" style="height: 145px;" placeholder="write down expanses details here..." required minlength="1" maxlength="2048" name="details"></textarea></div>
+                        <div><label class="form-label" style="margin-top: 29px;font-weight: bold;font-size: 22px;color: #15674f;">Expanses Details</label><textarea class="form-control form-control-lg" style="height: 145px;" placeholder="write down expanses details here..." required minlength="1" maxlength="2048" name="details"></textarea></div>
                     </div>
                     <div></div>
                     <div style="padding-top: 33px;"><button class="btn btn-success btn-lg" type="submit" form="form1">Submit</button></div>

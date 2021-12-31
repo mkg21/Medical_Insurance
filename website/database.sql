@@ -1,5 +1,5 @@
-CREATE DATABASE sql11461888;
-USE sql11461888;
+CREATE DATABASE medical_insurance;
+USE medical_insurance;
 
 CREATE TABLE customer
   (
@@ -78,6 +78,7 @@ CREATE TABLE claim
      expenses_subject TEXT NOT NULL,
      expenses_details TEXT NOT NULL,
      status           TINYINT DEFAULT NULL,
+     date             DATE NOT NULL,
      FOREIGN KEY (con_id) REFERENCES contract (id),
      FOREIGN KEY (hos_id) REFERENCES hospital (id)
   );
@@ -164,18 +165,51 @@ insert into enrolled values (7, 3);
 insert into enrolled values (8, 3);
 insert into enrolled values (10, 3);
 
-insert into claim values (DEFAULT, 1, 1, 2000, 'broken hand','covering 100% of the expenses', 0);
-insert into claim values (DEFAULT, 1, 1, 500 , 'fever','covering 100% of the expenses', null);
-insert into claim values (DEFAULT, 1, 2, 200 , 'flu','covering 100% of the expenses', 1);
-insert into claim values (DEFAULT, 2, 3, 300 , 'gastroenteritis','covering 100% of the expenses', 0);
-insert into claim values (DEFAULT, 2, 1, 290 , 'asthma','covering 100% of the expenses', null);
-insert into claim values (DEFAULT, 3, 3, 4000, 'broken leg','covering 100% of the expenses', 0);
-insert into claim values (DEFAULT, 4, 3, 500 , 'fever','covering 100% of the expenses', null);
-insert into claim values (DEFAULT, 4, 2, 480 , 'chest pain','covering 100% of the expenses', null);
-insert into claim values (DEFAULT, 6, 3, 780 , 'flu','covering 100% of the expenses', null);
-insert into claim values (DEFAULT, 6, 3, 2300, 'broken leg','covering 100% of the expenses', 0);
-insert into claim values (DEFAULT, 10, 2, 2000, 'asthma','covering 100% of the expenses',0);
-insert into claim values (DEFAULT, 6, 1, 700 , 'cold','covering 100% of the expenses', 1);
-insert into claim values (DEFAULT, 7, 3, 2000, 'chest pain','covering 100% of the expenses', 0);
-insert into claim values (DEFAULT, 7, 1, 250 , 'fever','covering 100% of the expenses', 0);
-insert into claim values (DEFAULT, 6, 3, 780 , 'flu','covering 100% of the expenses', 0);
+
+insert into claim values (DEFAULT, 1, 1, 2000, 'broken hand','covering 100% of the expenses', 0, '2021-08-28');
+insert into claim values (DEFAULT, 1, 1, 500 , 'fever','covering 100% of the expenses', null, '2021-04-19');
+insert into claim values (DEFAULT, 1, 2, 200 , 'flu','covering 100% of the expenses', 1, '2021-11-10');
+insert into claim values (DEFAULT, 2, 3, 300 , 'gastroenteritis','covering 100% of the expenses', 0, '2021-07-04');
+insert into claim values (DEFAULT, 2, 1, 290 , 'asthma','covering 100% of the expenses', null, '2021-08-25');
+insert into claim values (DEFAULT, 3, 3, 4000, 'broken leg','covering 100% of the expenses', 0, '2021-01-04');
+insert into claim values (DEFAULT, 4, 3, 500 , 'fever','covering 100% of the expenses', null, '2021-10-04');
+insert into claim values (DEFAULT, 4, 2, 480 , 'chest pain','covering 100% of the expenses', null, '2021-03-14');
+insert into claim values (DEFAULT, 6, 3, 780 , 'flu','covering 100% of the expenses', null, '2021-10-15');
+insert into claim values (DEFAULT, 6, 3, 2300, 'broken leg','covering 100% of the expenses', 0, '2021-01-10');
+insert into claim values (DEFAULT, 10, 2, 2000, 'asthma','covering 100% of the expenses',0, '2021-08-21');
+insert into claim values (DEFAULT, 6, 1, 700 , 'cold','covering 100% of the expenses', 1, '2021-04-06');
+insert into claim values (DEFAULT, 7, 3, 2000, 'chest pain','covering 100% of the expenses', 0, '2021-04-03');
+insert into claim values (DEFAULT, 7, 1, 250 , 'fever','covering 100% of the expenses', 0, '2021-09-07');
+insert into claim values (DEFAULT, 6, 3, 780 , 'flu','covering 100% of the expenses', 0, '2021-04-11');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

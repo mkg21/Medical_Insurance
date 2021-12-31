@@ -3,15 +3,18 @@ from mysql.connector import connect, Error
 from .helpers import struct
 
 # database_name = 'sql11461888'
-database_name = 'sql11461888'
+database_name = 'medical_insurance'
+
 # set to false after dev
 debug = True
 
 connection = connect(
-   host="localhost",
-   user="os",
-   password="PAss@2021"
+    host="localhost",
+    user="os",
+    password="PAss@2021"
 )
+
+
 # connection = connect(
 #     host="sql11.freemysqlhosting.net",
 #     user="sql11461888",
@@ -57,7 +60,7 @@ def write_db(query):
     global debug
     if debug:
         try:
-            with connection.cursor(dictionary=True) as cursor:
+            with connection.cursor() as cursor:
                 cursor.execute(query)
                 connection.commit()
                 return cursor.lastrowid
@@ -65,7 +68,7 @@ def write_db(query):
             print("DATABASE ERROR: ", e)
             return None
     else:
-        with connection.cursor(dictionary=True) as cursor:
+        with connection.cursor() as cursor:
             cursor.execute(query)
             connection.commit()
             return cursor.lastrowid
@@ -84,12 +87,9 @@ def dep_plan(dep):
     return read_db(q, one=True)
 
 
-def get_customer(cid, dic=False):
+def get_customer(cid):
     cus = read_db(f"SELECT *, {age_query} from customer Where id={cid}", one=True)
     plan = cus_plan(cus)
-    if dic:
-        cus['plan'] = plan
-        return cus
     cus['plan'] = struct(plan)
     return struct(cus)
 
@@ -101,11 +101,7 @@ def get_all_customers():
 
 
 def get_customer_plan(cid):
-    return read_db(f"", one=True)
-
-
-def get_customer_purchases(cid):
-    return read_db(f"")
+    return read_db(f"select * from plan where id=(select plan_id from contract where cus_id={cid})", one=True)
 
 
 def get_claims_for_customer(cid):
