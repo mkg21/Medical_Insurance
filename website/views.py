@@ -123,26 +123,6 @@ def customer():
     return render_template('customer_home.html', cus=get_customer(curr_cus))
 
 
-@views.route('/customer/purchase', methods=['POST', 'GET'])
-def purchase():
-    global curr_cus
-    if request.method == 'POST':
-        ben = request.form.get('ben')
-        plan = request.form.get('plan')
-
-        return render_template('home.html')
-
-    cus = get_customer(curr_cus)
-    cus_contract = get_contract_for_cus(cus)
-    deps = get_customer_dependents(cus.id)
-    deps_contracts = [(i, get_contract_for_dep(i)) for i in deps]
-
-    return render_template('purchase.html',
-                           plans=get_plans(),
-                           cus=cus_contract,
-                           deps=deps_contracts)
-
-
 @views.route('/customer/file_claim', methods=['POST', 'GET'])
 def file_claim():
     global curr_cus
@@ -292,3 +272,23 @@ def view_my_claim(cid):
     except:
         flash('claim does not exist!', 'danger')
         return redirect(url_for('views.view_my_claims'))
+
+
+# @views.route('/customer/purchase', methods=['POST', 'GET'])
+# def purchase():
+#     global curr_cus
+#     if request.method == 'POST':
+#         ben = request.form.get('ben')
+#         plan = request.form.get('plan')
+#
+#         return render_template('home.html')
+#
+#     cus = get_customer(curr_cus)
+#     cus_contract = get_contract_for_cus(cus)
+#     deps = get_customer_dependents(cus.id)
+#     deps_contracts = [(i, get_contract_for_dep(i)) for i in deps]
+#
+#     return render_template('purchase.html',
+#                            plans=get_plans(),
+#                            cus=cus_contract,
+#                            deps=deps_contracts)

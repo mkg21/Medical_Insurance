@@ -1,6 +1,6 @@
 from mysql.connector import connect, Error
 
-from .helpers import struct
+from .struct import struct
 
 database_name = 'sql11462345'
 # database_name = 'medical_insurance'
@@ -25,7 +25,7 @@ connection = connect(
 def init_use_database():
     try:
         with connection.cursor() as cursor:
-            cursor.execute(f"USE d{database_name}")
+            cursor.execute(f"USE {database_name}")
     except Error:
         print(f'Creating Database {database_name}...')
         with open('website/database.sql', encoding='utf8') as file:
