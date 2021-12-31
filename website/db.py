@@ -4,24 +4,24 @@ from mysql.connector import connect, Error
 
 from .struct import struct
 
-# database_name = 'sql11462345'
-database_name = 'medical_insurance'
+database_name = 'sql11462345'
+# database_name = 'medical_insurance'
 
 # set to false after dev
-debug = True
-
-connection = connect(
-    host="localhost",
-    user="os",
-    password="PAss@2021"
-)
-
+debug = False
 
 # connection = connect(
-#     host="sql11.freemysqlhosting.net",
-#     user="sql11462345",
-#     password="5EV8WpVFBh"
+#     host="localhost",
+#     user="os",
+#     password="PAss@2021"
 # )
+
+
+connection = connect(
+    host="sql11.freemysqlhosting.net",
+    user="sql11462345",
+    password="5EV8WpVFBh"
+)
 
 
 def init_use_database():
