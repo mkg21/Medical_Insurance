@@ -159,7 +159,7 @@ def file_claim():
             flash('Please enter valid data!', 'danger')
             return redirect(url_for('views.file_claim'))
 
-    return render_template('file_claim.html', hospitals=hospitals, contracts=contracts)
+    return render_template('file_claim.html', hospitals=hospitals, contracts=contracts, plans=get_plan_id_name_dict())
 
 
 @views.route('/admin/claims/<cid>', methods=['POST', 'GET'])

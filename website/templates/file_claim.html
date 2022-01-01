@@ -36,7 +36,10 @@
                         <div class="text-center justify-content-center"><label class="form-label" style="margin-top: 29px;font-weight: bold;font-size: 22px;color: #15674f;">Beneficiary</label>
                             <div class="d-flex justify-content-center"><select class="form-select" style="font-size: 19px; max-width: 428px;" name="ben" onchange="changeText(this);">
                                 {% for i in range(contracts|length) %}
-                                    <option style="font-size: 19px" value='{{ contracts[i].id }}' >{% if not contracts[i].dep_name %}Yourself ({{  }}){% else %}{{ contracts[i].dep_name + ', ' + contracts[i].kinship }}{% endif %}</option>
+                                    <option style="font-size: 19px" value='{{ contracts[i].id }}' >
+                                        {% if contracts[i].cus_id %}Yourself
+                                        {% else %}{{ contracts[i].dep_name + ', ' + contracts[i].kinship }}{% endif %}
+                                         ({{ plans[contracts[i].plan_id] }})</option>
                                 {% endfor %}
                                 </select></div>
                         </div>

@@ -149,6 +149,11 @@ def get_plans(get_hos_num=False):
     return [struct(i) for i in plans]
 
 
+def get_plan_id_name_dict():
+    plans = read_db(f"SELECT * from plan")
+    return {plan['id']: plan['type'] for plan in plans}
+
+
 def get_plan(pid):
     return read_db(f"", one=True)
 
