@@ -122,6 +122,14 @@ def get_unresolved_claims_for_customer(cid):
     return claims
 
 
+def get_latest_claims():
+    claims = read_db(
+        f"select *, status is not null as is_resolved from claim")
+    claims = [struct(c) for c in claims]
+    claims.sort(key=lambda c: c.f_date, reverse=True)
+    return claims
+
+
 def mark_claim_as_resolved(cid, accepted):
     return write_db(f"update claim set status = {accepted} where id = {cid};")
 

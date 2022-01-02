@@ -15,7 +15,7 @@
                                         <div class="card">
                                             <div class="card-body">
                                                 <header></header>
-                                                <h5 style="margin-bottom: 0; width:300px;">{{ filed }}</h5>
+                                                <a  style="cursor: pointer; color: blue" href="{{ url_for( 'views.view_customer' , id=filed.id ) }}"><h5 style="cursor: pointer;margin-bottom: 0; width:300px;">{{ filed.f_name }} {{ filed.m_name}} {{ filed.l_name}}</h5></a>
                                             </div>
                                         </div>
                                     </div>

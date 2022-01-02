@@ -187,9 +187,8 @@ def view_claim(cid):
         else:
             filed = get_customer(contract.res_id)
             ben = f'{contract.dep_name} ({contract.kinship})'
-        filed_name = f"{filed.f_name} {filed.m_name} {filed.l_name}"
         hospital_name = get_hospital(claim.hos_id).name
-        return render_template('view_claim.html', claim=claim, filed=filed_name, hos=hospital_name, ben=ben)
+        return render_template('view_claim.html', claim=claim, filed=filed, hos=hospital_name, ben=ben)
     except:
         return redirect(url_for('views.home'))
 
@@ -245,6 +244,12 @@ def view_claims(id):
     return render_template('view_claims.html', claims=claims, unresolved=unresolved, customer=get_customer(id))
 
 
+@views.route('/admin/latest_claims', methods=['POST', 'GET'])
+def latest_claims():
+    claims = get_latest_claims()
+    return render_template('view_claims.html', claims=claims, latest=1)
+
+
 @views.route('/customer/claims', methods=['POST', 'GET'])
 def view_my_claims():
     global curr_cus
@@ -268,9 +273,8 @@ def view_my_claim(cid):
         else:
             filed = get_customer(contract.res_id)
             ben = f'{contract.dep_name} ({contract.kinship})'
-        filed_name = f"{filed.f_name} {filed.m_name} {filed.l_name}"
         hospital_name = get_hospital(claim.hos_id).name
-        return render_template('view_claim.html', claim=claim, filed=filed_name, hos=hospital_name, ben=ben, is_cus=1)
+        return render_template('view_claim.html', claim=claim, filed=filed, hos=hospital_name, ben=ben, is_cus=1)
     except:
         flash('claim does not exist!', 'danger')
         return redirect(url_for('views.view_my_claims'))
