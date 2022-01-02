@@ -10,18 +10,18 @@ database_name = 'sql5462851'
 # set to false after dev
 debug = False
 #
-# connection = connect(
-#     host="localhost",
-#     user="os",
-#     password="PAss@2021"
-# )
-
-
 connection = connect(
-    host="sql5.freemysqlhosting.net",
-    user="sql5462851",
-    password="K4z8AA4th5"
+    host="localhost",
+    user="os",
+    password="PAss@2021"
 )
+
+
+# connection = connect(
+#     host="sql5.freemysqlhosting.net",
+#     user="sql5462851",
+#     password="K4z8AA4th5"
+# )
 
 
 def init_use_database():
