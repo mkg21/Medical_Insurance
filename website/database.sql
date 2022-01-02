@@ -78,10 +78,11 @@ CREATE TABLE claim
      expenses_subject TEXT NOT NULL,
      expenses_details TEXT NOT NULL,
      status           TINYINT DEFAULT NULL,
-     date             DATE NOT NULL,
+     f_date             DATE NOT NULL,
      FOREIGN KEY (con_id) REFERENCES contract (id),
      FOREIGN KEY (hos_id) REFERENCES hospital (id)
   );
+
 
 /*------------------------------  SAMPLE DATA -----------------------------------------*/
 
