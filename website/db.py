@@ -5,23 +5,23 @@ from mysql.connector import connect, Error
 from .struct import struct
 
 # database_name = 'sql11462679'
-database_name = 'medical_insurance'
+database_name = 'sql5462838'
 
 # set to false after dev
 debug = False
 
-connection = connect(
-    host="localhost",
-    user="os",
-    password="PAss@2021"
-)
-
-
 # connection = connect(
-#     host="sql11.freemysqlhosting.net",
-#     user="sql11462679",
-#     password="mL1986kikM"
+#     host="localhost",
+#     user="os",
+#     password="PAss@2021"
 # )
+
+
+connection = connect(
+    host="sql5.freemysqlhosting.net",
+    user="sql5462838",
+    password="StkUpBVVKh"
+)
 
 
 def init_use_database():
