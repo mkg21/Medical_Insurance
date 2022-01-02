@@ -4,12 +4,12 @@ from mysql.connector import connect, Error
 
 from .struct import struct
 
-# database_name = 'sql11462679'
-database_name = 'sql5462838'
+database_name = 'sql5462851'
+# database_name = 'medical_insurance'
 
 # set to false after dev
 debug = False
-
+#
 # connection = connect(
 #     host="localhost",
 #     user="os",
@@ -19,8 +19,8 @@ debug = False
 
 connection = connect(
     host="sql5.freemysqlhosting.net",
-    user="sql5462838",
-    password="StkUpBVVKh"
+    user="sql5462851",
+    password="K4z8AA4th5"
 )
 
 
@@ -28,6 +28,8 @@ def init_use_database():
     try:
         with connection.cursor() as cursor:
             cursor.execute(f"USE {database_name}")
+            # cursor.execute(f"DROP {database_name}")
+            # cursor.execute(f"UjSE {database_name}")
     except Error:
         print(f'Creating Database {database_name}...')
         with open('website/database.sql', encoding='utf8') as file:
