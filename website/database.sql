@@ -1,5 +1,5 @@
-CREATE DATABASE medical_insurance;
-USE medical_insurance;
+CREATE DATABASE sql11462679;
+USE sql11462679;
 
 CREATE TABLE customer
   (
