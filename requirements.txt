@@ -1,2 +1,14 @@
 Flask~=2.0.1
-mysql-connector-python~=8.0.27
+Werkzeug~=2.0.1
+mongoengine~=0.23.1
+wheel
+flask-mongoengine
+flask_login
+pytz~=2021.1
+requests~=2.26.0
+Flask-SocketIO==4.3.1
+python-engineio==3.13.2
+python-socketio==4.6.0
+flask_cors
+gunicorn==20.1.0
+eventlet==0.30.2
