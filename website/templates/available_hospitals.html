@@ -4,18 +4,12 @@
 {% block content %}
 <script>
        function available_hospitals () {
-           let cont_id = parseInt(document.getElementById('plans').value);
-           let plan_id = 0;
+           let plan_id = parseInt(document.getElementById('plans').value);
            let text = '';
            let plan_hos = {{ hospitals | tojson }};
            let people = {{ people | tojson }};
-           for(let i in people){
-                   if (parseInt(people[i]['contract']['id']) === cont_id){
-                   plan_id = people[i]['contract']['plan_id'];
-                   break;
-               }
-           }
            let hospitals = plan_hos[plan_id];
+
            for(let i in hospitals){
                let hospital = hospitals[i];
                text += "<li class='list-group-item'>";
