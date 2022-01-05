@@ -2,24 +2,24 @@ from datetime import datetime
 from mysql.connector import connect, Error
 from .struct import struct
 
-database_name = 'sql5462851'
-# database_name = 'medical_insurance'
+# database_name = 'sql5462851'
+database_name = 'medical_insurance'
 
 # set to false after dev
 debug = False
 #
-# connection = connect(
-#     host="localhost",
-#     user="os",
-#     password="PAss@2021"
-# )
-
-
 connection = connect(
-    host="sql5.freemysqlhosting.net",
-    user="sql5462851",
-    password="K4z8AA4th5"
+    host="localhost",
+    user="os",
+    password="PAss@2021"
 )
+
+
+# connection = connect(
+#     host="sql5.freemysqlhosting.net",
+#     user="sql5462851",
+#     password="K4z8AA4th5"
+# )
 
 
 def init_use_database():
