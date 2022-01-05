@@ -1,54 +1,18 @@
-@app.route('/new_Hospital', methods=['POST'])
-def new_hospital():
-    global customer_id, admin_id
-    conn = mysql.connect()
-    cursor = conn.cursor()
-    _name = request.form['name']
-    _HospitalKind = request.form['Hospital_Kind']
-    _Specialities = request.form['Specialities']
-    _gv = request.form['government']
-    _city = request.form['city']
-    _adminid = request.form['_admin_id']
-    _adminid = admin_id
-    basic, premium, golden = request.form['basic'], request.form['premium'], request.form['golden']
+from random import randrange
+x = [(1,'Maria','2000-03-15','female','daughter'),
+(1,'Magy','2003-03-17','female','daughter'),
+(2,'rafat','2008-11-01','male','son'),
+(4,'karim','2005-03-11','male','son'),
+(6,'Maha','2000-12-11','female','daughter'),
+(6,'yara','2007-03-11','female','daughter'),
+(6,'Dina','1975-03-11','female','wife'),
+(7,'ali','2000-01-11','male','son'),
+(7,'Yousef','2002-08-08','male','son'),
+(7,'Taher','1997-03-11','male','son'),
+(7,'Sahar','1977-03-11','female','wife')]
 
-    cursor.callproc('createhosp', (_name, _Specialities, _HospitalKind, _gv, _city, _adminid))
-    print(cursor.callproc('createhosp', (_name, _Specialities, _HospitalKind, _gv, _city, _adminid)))
-    cursor.execute(f"select hospital_id from project2.hospitals where hospital_name = '{_name}' ")
-    conn.commit()
-    hos_id = cursor.lastrowid
-    print(hos_id)
-    # cursor.execute(f"select * from project2.hospitals where hospital_id =  ")
-    # hospita11ll_id = cursor.fetchone()
-    # print( hospita11ll_id)
-    conn.commit()
-    cursor.execute(f"insert into hospital_has_plans values ({hos_id},{1});")
-    conn.commit()
-
-    # if basic:
-    #     _planid = 1
-    #     # cursor.callproc('createhospitalhas',(_planid,hospitall_id))
-    #     cursor.execute(f"insert into hospital_has_plans values ({hospitall_id},{_planid});")
-    #     conn.commit()
-    #     print("?")
-    # if premium:
-    #     _planid = 2
-    #     cursor.execute(f"insert into hospital_has_plans values ({hospitall_id},{_planid});")
-    #     conn.commit()
-    #     print("?")
-    #     # cursor.callproc('createhospitalhas',(_planid,hospitall_id))
-    # if golden:
-    #     _planid = 3
-    #     cursor.execute(f"insert into hospital_has_plans values ({hospitall_id},{_planid});")
-    #     conn.commit()
-    #     print("?")
-    #     # cursor.callproc('createhospitalhas',(_planid,hospitall_id))
-
-    data = cursor.fetchall()
-
-    if len(data) is 0:
-        conn.commit()
-        print('ok')
-        return render_template('Error-Page.html', error='Hospital created successfully !')
-    else:
-        return render_template('Error-Page.html', error=str(data[0]))
+for i in x:
+    res_id = i[0]
+    name = i[1]
+    kinship = i[4]
+    print(f"insert into contract values (DEFAULT, {randrange(1, 4)}, null, {res_id}, '{name}', '{kinship}','Cash, visa');")

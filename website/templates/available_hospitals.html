@@ -1,6 +1,32 @@
+{% set sub_cus = true %}
 {% extends "base.html" %}
 {% block title %}Homes{% endblock %}
 {% block content %}
+<script>
+       function available_hospitals () {
+           let cont_id = parseInt(document.getElementById('plans').value);
+           let plan_id = 0;
+           let text = '';
+           let plan_hos = {{ hospitals | tojson }};
+           let people = {{ people | tojson }};
+           for(let i in people){
+                   if (parseInt(people[i]['contract']['id']) === cont_id){
+                   plan_id = people[i]['contract']['plan_id'];
+                   break;
+               }
+           }
+           let hospitals = plan_hos[plan_id];
+           for(let i in hospitals){
+               let hospital = hospitals[i];
+               text += "<li class='list-group-item'>";
+               text += "<p  style='font-size: 20px; color:#000066 ;text-align: left; float: left; width: 20%;' >"+ hospital['name'] +"</p>";
+               text += "<p  style='font-size: 20px; color:#660033 ;text-align: left; float: right; width: 55%;'>"+ hospital['address'] +"</p>";
+               text += "<p  style='font-size: 20px; color:darkred ;text-align: left; float: right; width: 25%;'>"+ hospital['phone'] +"</p>";
+               text += "</li>";
+           }
+           document.getElementById('hos').innerHTML = text ;
+    }
+</script>
     <div>
     <div>
         <h4 style="margin-top: 6px;padding-top: 40px;padding-left: 103px;color: var(--bs-gray-dark);"></h4>
@@ -8,46 +34,41 @@
     </div>
     <div class="d-lg-flex justify-content-center justify-content-lg-center" style="margin: 0px 100px 50px;">
         <div class="container shadow" style="background: rgba(70,211,126,0.18);padding: 29px;border-radius: 14px;">
-           {% for person in people %}
+
             <div class="row" style="margin-top: -17px;padding-top: 51px;padding-bottom: 56px;border-top-color: var(--bs-cyan);">
                 <div class="col">
                     <div class="row">
                         <div class="col-md-12 ">
-                            <h5 class="text-center" style="padding: 9px 9px 13px;margin-bottom: 18px;color: #bf003e;">
-                            {% if person.plan.id %}
-                                Available hospitals for your {% if not person.f_name %}{{ person.kinship.lower() }} {{ person.name }}'s{% endif %} plan ({{ person.plan.type }})<br /></h5>
+                            <div class="d-flex ">
+                                    <h5 style="padding-right: 16px;padding-top: 7px;">Show available hospitals for <br /></h5>
+
+                                <select style="width: 300px; text-align: center; font-size: 19px" id="plans" onchange="available_hospitals();">
+                                    {% for person in people %}
+                                        {% if person.f_name %}
+                                            <option style="font-size: 18px"  value="{{ person.contract.plan_id }}" >You ({{ person.plan_type }})</option>
+                                        {% else %}
+                                            <option style="font-size: 18px"  value="{{ person.contract.plan_id }}" >{{ person.name }}, {{ person.kinship }} ({{ person.plan_type }})</option>
+                                        {%endif %}
+                                    {% endfor %}
+                                </select>
+                                </div>
+                                <br><br>
                                     <div class="about-border"></div>
                                     <div class="card-body">
-                                        <p  style="font-size: 20px; font-weight: bold;color:#000066 ;text-align: left; float: left; width: 20%;">Name</p>
-                                        <p  style="font-size: 20px; font-weight: bold;color:#660033 ;text-align: left; float: right; width: 55%;">Address</p>
-                                        <p  style="font-size: 20px; font-weight: bold;color:darkred ;text-align: left; float: right; width: 25%;">Contact</p>
+                                        <p  style="font-size: 18px; font-weight: bold;text-align: left; float: left; width: 20%;">Name</p>
+                                        <p  style="font-size: 18px; font-weight: bold;text-align: left; float: right; width: 55%;">Address</p>
+                                        <p  style="font-size: 18px; font-weight: bold;text-align: left; float: right; width: 25%;">Contact</p>
                                     </div>
-                            <ul class="list-group" style="width: 100%;">
-                            {% for hospital in hospitals[person.plan.id|int] %}
-
-                                    <li class="list-group-item">
-                                        <p  style="font-size: 20px; color:#000066 ;text-align: left; float: left; width: 20%;">{{ hospital.name }}</p>
-                                        <p  style="font-size: 20px; color:#660033 ;text-align: left; float: right; width: 55%;">{{ hospital.address }}</p>
-                                        <p  style="font-size: 20px; color:darkred ;text-align: left; float: right; width: 25%;">{{ hospital.phone }}</p>
-
-
-                                    </li>
-
-                            {% endfor %}
+                            <ul class="list-group" id='hos' style="width: 100%;">
                             </ul>
-                            {% else %}
-                                {% if not person.f_name %}Your {{ person.kinship.lower() }} {{ person.name }} is not enrolled in any plan
-                                {% else %}
-                                    You are not enrolled in any plan
-                                {% endif %}
-                            {% endif %}
                         </div>
                     </div>
                 </div>
             </div>
-            {% endfor %}
-
         </div>
     </div>
 </div>
+<script>
+    available_hospitals();
+</script>
 {% endblock %}

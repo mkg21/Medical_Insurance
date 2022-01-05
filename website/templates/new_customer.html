@@ -4,18 +4,19 @@
 {% block title %}Homes{% endblock %}
 {% block content %}
     <script>
-        function change_detail(pid) {
-            let plans = {{ plans | tojson }};
-            let p_idx = parseInt(pid.value);
-            for(let i in plans){
+         function change_detail() {
+                    let plans = {{ plans | tojson }};
+                    let plan_id = parseInt(document.getElementById('plans').value);
+                    let plan = 0;
+                    for(let i in plans){
+                        if(plan_id === parseInt(plans[i]['id'])){
+                             document.getElementById("curr_plan").innerText = "price: "+  plans[i]['price'] +
+                             " EGP  -  Benefits: " + plans[i]['benefits'] + " - " + plans[i]['enrolled'] + " enrolled hospitals.";
+                         break;
+                        }
+                    }
 
-                if(p_idx === parseInt(plans[i][0])){
-                    p_idx = i;
-                    break
-                }
             }
-            document.getElementById("curr_plan").innerText = "price: "+  plans[p_idx][3] +" EGP  -  Benefits: " +  plans[p_idx][2];
-    }
     </script>
     <div style="margin: 10px 50px;transform: scale(0.9)">
         <div class="container text-center border rounded shadow justify-content-center" style="background: rgba(70,211,126,0.18);margin-top: -24px;width: 570px;padding: 37px 60px 35px;"><label class="form-label text-center" style="font-family: Roboto, sans-serif;color: #15674f;font-weight: bold;font-size: 18px;margin-bottom: 19px;">Customer Information</label>
@@ -74,7 +75,7 @@
                 <div class="mb-3" style="min-width: 36px;padding-bottom:  5px;">
                     <div class="row" style="margin-left: -80px;">
                         <div class="col" style="margin-right: -55px;"><label class="col-form-label">Purchase plan</label></div>
-                            <div class="col"><select name="plan" class="form-select form-select-sm" style="font-size: 17px;color: #15674f;font-weight: bold;width: 120px;" name="plan" onchange="change_detail(this);" required>
+                            <div class="col"><select name="plan" class="form-select form-select-sm" style="font-size: 17px;color: #15674f;font-weight: bold;width: 120px;" id='plans' name="plan" onchange="change_detail();" required>
                                 {% for plan in plans %}
                                 <option value='{{ plan.id }}' style="color: #1DA7EE;font-weight: bold;">{{ plan.type }}</option>
                                 {% endfor %}
@@ -83,10 +84,13 @@
                     </div>
                 </div>
             </form>
-            <div><h4 id='curr_plan' class="col-form-label">price: {{ plans[0].price }} EGP  -  Benefits: {{ plans[0].benefits }}</h4>
+            <div><h4 id='curr_plan' class="col-form-label"></h4>
             <span class="col-form-label">(Payment method should be added here)</span></div>
 
             <div class="d-inline mb-3" style="width: 192px;min-width: 107px;padding-bottom:  5px;"><button class="btn btn-success border rounded-pill border-primary shadow w-100" type="submit" style="margin-top: 25px;" data-bs-target="#" data-bs-toggle="submit" form="form1">Register customer</button></div>
         </div>
     </div>
+<script>
+    change_detail();
+</script>
 {% endblock %}

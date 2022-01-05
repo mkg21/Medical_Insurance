@@ -1,3 +1,9 @@
+{% if is_cus %}
+    {% set sub_cus = true %}
+{% else %}
+    {% set sub_admin = true %}
+{% endif %}
+
 {% extends "base.html" %}
 {% block title %}Homes{% endblock %}
 {% block content %}

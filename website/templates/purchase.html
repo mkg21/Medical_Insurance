@@ -1,44 +1,46 @@
+{% set sub_cus = true %}
 {% extends "base.html" %}
 {% block title %}Purchase Plan{% endblock %}
 {% block content %}
 
 <script>
-   function changePlans (code) {
-       let cont_id = parseInt(code.value);
+   function changePlans () {
+       let cont_id = parseInt(document.getElementById('ben').value);
        let plan_id = 0;
        let text = '';
-       let contracts = {{ contracts | tojson }};
+       let people = {{ people | tojson }};
        let plans = {{ plans | tojson }};
-       for(let i in contracts){
-           if (parseInt(contracts[i][0]) === cont_id){
-               plan_id = contracts[i][1];
+       for(let i in people){
+            console.log(people[i]);
+           if (parseInt(people[i]['contract']['id']) === cont_id){
+               plan_id = people[i]['contract']['plan_id'];
+               for(let i in plans){
+                   if(parseInt(plans[i]['id']) === plan_id) continue;
+                   text += '<option value="' + plans[i]['id'] + '" style="font-weight: bold;">' + plans[i]['type'] + '</option>';
+               }
+               document.getElementById('plans').innerHTML = text ;
+               change_detail();
                break;
            }
        }
-       for(let i in plans){
-           if(parseInt(plans[i][0]) === plan_id) continue;
-           text += '<option value="' + plans[i][0] + '" style="font-weight: bold;">' + plans[i][1] + '</option>';
 
-       }
-       document.getElementById('plans').innerHTML = text ;
-       change_detail();
-    }
-    $( document ).ready(function() {
-        change_detail();
-    });
+    };
 
-   function change_detail() {
+     function change_detail() {
             let plans = {{ plans | tojson }};
-            let p_idx = parseInt(document.getElementById('plans').value);
+            let plan_id = parseInt(document.getElementById('plans').value);
+            let plan = 0;
             for(let i in plans){
-
-                if(p_idx === parseInt(plans[i][0])){
-                    p_idx = i;
-                    break
+                if(plan_id === parseInt(plans[i]['id'])){
+                     document.getElementById("curr_plan").innerText = "price: "+  plans[i]['price'] +
+                     " EGP  -  Benefits: " + plans[i]['benefits'] + " - " + plans[i]['enrolled'] +
+                     " enrolled hospitals.";
+                 break;
                 }
             }
-            document.getElementById("curr_plan").innerText = "price: "+  plans[p_idx][3] +" EGP  -  Benefits: " +  plans[p_idx][2];
-    }
+
+    };
+
 
 </script>
 
@@ -63,12 +65,12 @@
                                                     <div style="padding-bottom: 20px;padding-top: 47px;">
                                                         <div class="row" style="margin-left: -80px;">
                                                             <div class="col text-end" style="margin-right: 0;padding-bottom: 0;"><label class="col-form-label" style="font-weight: bold;">Beneficiary</label></div>
-                                                            <div class="col"><select name="ben" class="form-select form-select-sm" style="font-size: 17px;color: #15674f;font-weight: bold;width: 271.2px;" name="plan" onchange="changePlans(this);" required>
-                                                                {% for con in contracts %}
-                                                                    {% if con.cus_id %}
-                                                                    <option value="{{ con.id }}" style="color: #15674f;font-weight: bold;">You - {{  plans_dict[con.plan_id] }}</option>
+                                                            <div class="col"><select id = 'ben' name="ben" class="form-select form-select-sm" style="font-size: 17px;color: #15674f;font-weight: bold;width: 271.2px;" name="plan" onchange="changePlans();" required>
+                                                                {% for person in people %}
+                                                                    {% if person.f_name %}
+                                                                    <option value="{{ person.contract.id }}" style="color: #15674f;font-weight: bold;">You - {{  person.plan_type }}</option>
                                                                     {% else %}
-                                                                    <option value="{{ con.id }}" style="color: #15674f;font-weight: bold;">{{ con.kinship.capitalize() }}, {{  con.dep_name.capitalize() }} - {{  plans_dict[con.plan_id] }}</option>
+                                                                    <option value="{{ person.contract.id }}" style="color: #15674f;font-weight: bold;">{{ person.kinship.capitalize() }}, {{  person.name.capitalize() }} - {{ person.plan_type }}</option>
                                                                     {% endif %}
                                                                 {% endfor %}
                                                             </select></div>
@@ -78,21 +80,14 @@
                                                         <div class="row" style="margin-left: -80px;">
                                                             <div class="col" style="margin-right: 0;text-align: right;width: 528.1px;"><label class="col-form-label" style="font-weight: bold;">Plan</label></div>
                                                             <div class="col"><select id="plans" name="plans" onchange="change_detail();" name="plan" class="form-select form-select-sm" style="font-size: 17px;color: #15674f;font-weight: bold;width: 138.2px;" name="plan" required>
-                                                                {% for i in plans %}
-                                                                    {% if i.id != contracts[0].plan_id %}
-                                                                        <option value="{{ i.id }}" style="font-weight: bold;">{{ i.type }}</option>
-                                                                    {% endif %}
-                                                                {% endfor %}
                                                                 </select></div>
                                                         </div>
-                                                    <br><br>
-                                                    </div><button class="btn btn-primary" type="submit" form='form1' style="margin-left: 23px;">Purchase</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            <br>
                                 <div style="margin-top: 0;">
                                     <div><h4 id='curr_plan' class="col-form-label"></h4></div>
                                 </div>
@@ -100,6 +95,9 @@
                                     <div></div>
                                 </div>
                             </form><label class="form-label"></label>
+                            <br><br>
+                            <button class="btn btn-primary" type="submit" form='form1' style="margin-left: 23px;">Purchase</button>
+
                         </div>
                     </div>
                 </div>
@@ -109,6 +107,6 @@
 </div>
 
     <script>
-        change_detail();
+        changePlans();
     </script>
 {% endblock %}

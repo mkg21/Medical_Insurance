@@ -1,3 +1,5 @@
+{% set sub_admin = true %}
+
 {% extends "base.html" %}
 {% block title %}Homes{% endblock %}
 {% block content %}
@@ -41,8 +43,8 @@
                                 <div class="card">
                                     <div class="card-body" style="padding: 8px 7px 3px 26px;">
                                         <p class="card-title" style="font-size: 20px">
-                                                {% if  cus.plan %}
-                                                    {{ cus.plan.type }}
+                                                {% if  cus.plan_type %}
+                                                    {{ cus.plan_type }}
                                                 {% else %}
                                                     not enrolled in any plan.
                                                 {% endif %}
@@ -139,7 +141,7 @@
                                 <div class="card-body" style="padding: 8px 7px 3px 26px;">
                                     <p class="card-title" style="width: 179%; font-size: 20px">
                                         {{ dep.name.capitalize() }} - {% if cus.gender.lower() == 'male' %}his{% else %}her {% endif %}
-                                        {{ dep.kinship }} - {{ dep.age|int}} years old - enrolled in {{ dep.plan.type }} plan <br /></p>
+                                        {{ dep.kinship }} - {{ dep.age|int}} years old - enrolled in {{ dep.plan_type }} plan <br /></p>
                                 </div>
                             </div>
                         {% endfor %}

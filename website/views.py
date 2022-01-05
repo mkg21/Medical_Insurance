@@ -96,10 +96,9 @@ def new_hospital():
         address = request.form.get('address')
         phone = request.form.get('phone')
 
-        plans = [request.form.get(i.type) for i in plans]
+        plans = [request.form.get(i['type']) for i in plans]
         print(plans)
         plans_ids = [int(i) for i in plans if i]
-
 
         if not (name and email and address and phone and plans_ids):
             flash('Please enter all data!', 'danger')
@@ -114,7 +113,7 @@ def new_hospital():
             return redirect(url_for('views.new_hospital'))
 
         flash('Hospital added successfully!', 'success')
-        return redirect(url_for('views.home'))
+        return redirect(url_for('views.admin'))
 
     return render_template('new_hospital.html', plans=plans)
 
@@ -130,15 +129,10 @@ def file_claim():
     global curr_cus
     hospitals = {}
     for i in get_plans():
-        hospitals[i.id] = get_available_hospitals_for_plan(i.id)
-    cus = get_customer(curr_cus)
-    cus_con = get_contract_for_cus(cus)
-
-    deps = get_customer_dependents(curr_cus)
-    dep_con = [get_contract_for_dep(d) for d in deps]
-    dep_con = [i for i in dep_con if i]
-
-    contracts = [cus_con] + dep_con
+        hospitals[i['id']] = get_available_hospitals_for_plan(i['id'])
+    cus = get_customer(curr_cus, include_cont_plan=True)
+    deps = get_customer_dependents(curr_cus, include_cont_plan=True)
+    people = [cus] + deps
 
     if request.method == 'POST':
         try:
@@ -159,7 +153,7 @@ def file_claim():
             flash('Please enter valid data!', 'danger')
             return redirect(url_for('views.file_claim'))
 
-    return render_template('file_claim.html', hospitals=hospitals, contracts=contracts, plans=get_plan_id_name_dict())
+    return render_template('file_claim.html', hospitals=hospitals, people=people, plans=get_plan_id_name_dict())
 
 
 @views.route('/admin/claims/<cid>', methods=['POST', 'GET'])
@@ -180,14 +174,14 @@ def view_claim(cid):
             ...
     try:
         claim = get_claim(cid)
-        contract = get_contract(claim.con_id)
-        if contract.cus_id:
-            filed = get_customer(contract.cus_id)
+        contract = get_contract(claim['con_id'])
+        if contract['cus_id']:
+            filed = get_customer(contract['cus_id'])
             ben = 'The customer'
         else:
-            filed = get_customer(contract.res_id)
-            ben = f'{contract.dep_name} ({contract.kinship})'
-        hospital_name = get_hospital(claim.hos_id).name
+            filed = get_customer(contract['res_id'])
+            ben = f'{contract["dep_name"]} ({contract["kinship"]})'
+        hospital_name = get_hospital(claim['hos_id'])['name']
         return render_template('view_claim.html', claim=claim, filed=filed, hos=hospital_name, ben=ben)
     except:
         return redirect(url_for('views.home'))
@@ -198,10 +192,10 @@ def available_hospitals():
     global curr_cus
     hospitals = {}
     for i in get_plans():
-        hospitals[i.id] = get_available_hospitals_for_plan(i.id)
-    cus = get_customer(curr_cus)
-    deps = get_customer_dependents(curr_cus, include_plan=True)
-    deps_with_plan = [i for i in deps if i.plan]
+        hospitals[i['id']] = get_available_hospitals_for_plan(i['id'])
+    cus = get_customer(curr_cus, include_cont_plan=True)
+    deps = get_customer_dependents(curr_cus, include_cont_plan=True)
+    deps_with_plan = [i for i in deps if i['plan_type']]
     people = [cus] + deps_with_plan
 
     return render_template('available_hospitals.html', hospitals=hospitals, people=people)
@@ -220,8 +214,8 @@ def view_customers():
 
 @views.route('/admin/customers/<id>')
 def view_customer(id):
-    cus = get_customer(int(id))
-    deps = get_customer_dependents(int(id), include_plan=True)
+    cus = get_customer(int(id), include_cont_plan=True)
+    deps = get_customer_dependents(int(id), include_cont_plan=True)
     if cus:
         return render_template('customer_details.html', cus=cus, deps=deps)
     else:
@@ -262,18 +256,18 @@ def view_my_claim(cid):
     global curr_cus
     try:
         claim = get_claim(cid)
-        contract = get_contract(claim.con_id)
+        contract = get_contract(claim['con_id'])
 
-        if curr_cus not in [contract.cus_id, contract.res_id]:
+        if curr_cus not in [contract['cus_id'], contract['res_id']]:
             flash('You are not allowed to see this claim!', 'danger')
             return redirect(url_for('views.view_my_claims'))
-        if contract.cus_id:
-            filed = get_customer(contract.cus_id)
+        if contract['cus_id']:
+            filed = get_customer(contract['cus_id'])
             ben = 'You'
         else:
-            filed = get_customer(contract.res_id)
-            ben = f'{contract.dep_name} ({contract.kinship})'
-        hospital_name = get_hospital(claim.hos_id).name
+            filed = get_customer(contract['res_id'])
+            ben = f'{contract["dep_name"]} ({contract["kinship"]})'
+        hospital_name = get_hospital(claim['hos_id'])['name']
         return render_template('view_claim.html', claim=claim, filed=filed, hos=hospital_name, ben=ben, is_cus=1)
     except:
         flash('claim does not exist!', 'danger')
@@ -294,12 +288,8 @@ def purchase():
             flash("Something went wrong!", "danger")
             return render_template('purchase.html')
 
-    cus = get_customer(curr_cus)
-    cus_con = get_contract_for_cus(cus)
+    cus = get_customer(curr_cus, include_cont_plan=True)
+    deps = get_customer_dependents(curr_cus, include_cont_plan=True)
+    people = [cus] + deps
 
-    deps = get_customer_dependents(curr_cus)
-    dep_con = [get_contract_for_dep(d) for d in deps]
-    dep_con = [i for i in dep_con if i]
-    contracts = [cus_con] + dep_con
-
-    return render_template('purchase.html', plans=get_plans(), plans_dict=get_plan_id_name_dict(), contracts=contracts)
+    return render_template('purchase.html', plans=get_plans(get_hos_num=True), people=people)

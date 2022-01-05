@@ -1,25 +1,24 @@
-
+{% set sub_cus = true %}
 {% extends "base.html" %}
 {% block title %}Homes{% endblock %}
 {% block content %}
 
 <script>
-   function changeText (code) {
-       let cont_id = parseInt(code.value);
+   function changeText () {
+       let cont_id = parseInt(document.getElementById('ben').value);
        let plan_id = 0;
        let text = '';
        let plan_hos = {{ hospitals | tojson }};
-       let contracts = {{ contracts | tojson }};
-       for(let i in contracts){
-           console.log(contracts[i] + '  ggg');
-           if (parseInt(contracts[i][0]) === cont_id){
-               plan_id = contracts[i][1];
+       let people = {{ people | tojson }};
+       for(let i in people){
+               if (parseInt(people[i]['contract']['id']) === cont_id){
+               plan_id = people[i]['contract']['plan_id'];
                break;
            }
        }
        let hospitals = plan_hos[plan_id];
        for(let i in hospitals){
-           text += "<option style='font-size: 19px' value=" + hospitals[i][0] + " >" + hospitals[i][1] + "</option>";
+           text += "<option style='font-size: 19px' value=" + hospitals[i]['id'] + " >" + hospitals[i]['name'] + "</option>";
        }
        document.getElementById('hos').innerHTML = text ;
     }
@@ -34,22 +33,19 @@
                     <div class="card" style="background: rgba(255,193,7,0);">
                         <h4 class="text-center" style="background: var(--bs-yellow);padding-bottom: 9px;padding-top: 6px;">File New Insurance Claim</h4>
                         <div class="text-center justify-content-center"><label class="form-label" style="margin-top: 29px;font-weight: bold;font-size: 22px;color: #15674f;">Beneficiary</label>
-                            <div class="d-flex justify-content-center"><select class="form-select" style="font-size: 19px; max-width: 428px;" name="ben" onchange="changeText(this);">
-                                {% for i in range(contracts|length) %}
-                                    <option style="font-size: 19px" value='{{ contracts[i].id }}' >
-                                        {% if contracts[i].cus_id %}Yourself
-                                        {% else %}{{ contracts[i].dep_name + ', ' + contracts[i].kinship }}{% endif %}
-                                         ({{ plans[contracts[i].plan_id] }})</option>
+                            <div class="d-flex justify-content-center"><select class="form-select" style="font-size: 19px; max-width: 428px;" id="ben" name="ben" onchange="changeText();">
+                                {% for person in people %}
+                                    <option style="font-size: 19px" value='{{ person.contract.id }}' >
+                                        {% if person.id %}Yourself
+                                        {% else %}{{ person.name + ', ' + person.kinship }}{% endif %}
+                                         ({{ plans[person.contract.plan_id] }})</option>
                                 {% endfor %}
                                 </select></div>
                         </div>
                         <div class="text-center justify-content-center"><label class="form-label" style="margin-top: 29px;font-weight: bold;font-size: 22px;color: #15674f;">Hospital</label>
                             <div class="d-flex justify-content-center"><select class="form-select" style="max-width: 428px;" id="hos" name="hos">
-
-                                {% for hos in hospitals[contracts[0].plan_id] %}
-                                    <option style="font-size: 19px"  value={{ hos.id }} >{{ hos.name }}</option>
-                                {% endfor %}
-                                </select></div>
+<!--                                place holder -->
+                            </select></div>
                         </div>
                         <div><label class="form-label" style="margin-top: 29px;font-weight: bold;font-size: 22px;color: #15674f;">Expanses Subject</label>
                             <div class="d-flex d-xxl-flex justify-content-center justify-content-xxl-center"><input class="form-control" type="text" placeholder="write expanses subject" style="max-width: 428px;" required name="subject" /></div>
@@ -66,4 +62,7 @@
         </div>
     </div>
 </div>
+<script>
+    changeText();
+</script>
 {% endblock %}

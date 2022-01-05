@@ -1,5 +1,5 @@
-CREATE DATABASE medical_insurance;
-USE medical_insurance;
+CREATE DATABASE sql5462851;
+USE sql5462851;
 
 CREATE TABLE customer
   (
@@ -116,20 +116,25 @@ insert into plan values (DEFAULT, 'Golden','30% coverage',15000.00);
 
 
 insert into contract values (DEFAULT, 1, 1, null, null,null,'Cash, visa');
-insert into contract values (DEFAULT, 1, null, 1, 'Maria','daughter','Master Card,cash');
-insert into contract values (DEFAULT, 2, null, 1, 'Magy','daughter','Cash, visa');
 insert into contract values (DEFAULT, 3, 2, null, null,null,'Cash, visa');
-insert into contract values (DEFAULT, 1, null, 2, 'rafat','son','Cash, visa');
 insert into contract values (DEFAULT, 3, 3, null, null,null,'Master Card,cash');
 insert into contract values (DEFAULT, 3, 4, null, null,null,'Master Card,cash');
 insert into contract values (DEFAULT, 3, 5, null, null,null,'Master Card,cash');
-insert into contract values (DEFAULT, 2, null, 4, 'karim','son','Master Card,cash');
 insert into contract values (DEFAULT, 3, 6, null, null ,null,'Cash, visa');
-insert into contract values (DEFAULT, 3, null, 6, 'Dina','wife','Cash, visa');
-insert into contract values (DEFAULT, 2, null, 6, 'yara','daughter','Cash, visa');
-insert into contract values (DEFAULT, 1, null, 6, 'Maha','daughter','Master Card,cash');
 insert into contract values (DEFAULT, 3, 7, null, null,null,'Cash, visa');
-insert into contract values (DEFAULT, 1, null, 7, 'Sahar','wife','Cash, visa');
+insert into contract values (DEFAULT, 3, 8, null, null,null,'Cash, visa');
+
+insert into contract values (DEFAULT, 3, null, 1, 'Maria', 'daughter','Cash, visa');
+insert into contract values (DEFAULT, 2, null, 1, 'Magy', 'daughter','Cash, visa');
+insert into contract values (DEFAULT, 2, null, 2, 'rafat', 'son','Cash, visa');
+insert into contract values (DEFAULT, 2, null, 4, 'karim', 'son','Cash, visa');
+insert into contract values (DEFAULT, 2, null, 6, 'Maha', 'daughter','Cash, visa');
+insert into contract values (DEFAULT, 1, null, 6, 'yara', 'daughter','Cash, visa');
+insert into contract values (DEFAULT, 1, null, 6, 'Dina', 'wife','Cash, visa');
+insert into contract values (DEFAULT, 1, null, 7, 'ali', 'son','Cash, visa');
+insert into contract values (DEFAULT, 2, null, 7, 'Yousef', 'son','Cash, visa');
+insert into contract values (DEFAULT, 3, null, 7, 'Taher', 'son','Cash, visa');
+insert into contract values (DEFAULT, 3, null, 7, 'Sahar', 'wife','Cash, visa');
 
 
 insert into hospital values (DEFAULT, 'Dar Elshefa','21 alfath street, tanta governorate','Dar Elshefa322@gmail.com','01093344535');
@@ -144,12 +149,9 @@ insert into hospital values (DEFAULT, 'Alandalos','19 alimobarak street, tanta g
 insert into hospital values (DEFAULT, 'Almaidan','13 alnakheel street, Mansoura governorate','Almaidan4610@gmail.com','01577790995');
 
 insert into enrolled values (1, 1);
-insert into enrolled values (2, 1);
 insert into enrolled values (3, 1);
 insert into enrolled values (4, 1);
 insert into enrolled values (9, 1);
-insert into enrolled values (10, 1);
-insert into enrolled values (1, 2);
 insert into enrolled values (2, 2);
 insert into enrolled values (4, 2);
 insert into enrolled values (5, 2);
@@ -164,6 +166,7 @@ insert into enrolled values (5, 3);
 insert into enrolled values (6, 3);
 insert into enrolled values (7, 3);
 insert into enrolled values (8, 3);
+insert into enrolled values (9, 3);
 insert into enrolled values (10, 3);
 
 
