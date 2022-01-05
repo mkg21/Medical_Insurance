@@ -12,6 +12,14 @@ connection = connect(
 database_name = 'medical_insurance'
 
 
+connection = connect(
+    host="sql5.freemysqlhosting.net",
+    user="sql5462851",
+    password="K4z8AA4th5"
+)
+database_name = 'sql5462851'
+
+
 def init_use_database():
     """
     use current database and create it if it doesn't exist
@@ -349,7 +357,7 @@ def get_contract_for_cus(cus_id):
 def get_contract_for_dep(cus_id, name, kinship):
     """ get contract for dependent using its customer id, dependent name and kinship between them """
     con = read_db(
-        f"select * from contract where res_id={cus_id} and dep_name='{name}' and kinship='{kinship}'", one=True)
+        f"select * from contract where res_id = {cus_id} and dep_name='{name}' and kinship='{kinship}'", one=True)
     return con
 
 
