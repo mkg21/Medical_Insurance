@@ -4,20 +4,20 @@ from mysql.connector import connect, Error
 # set to false after dev
 debug = False
 
-# connection = connect(
-#     host="localhost",
-#     user="os",
-#     password="PAss@2021"
-# )
-# database_name = 'medical_insurance'
-
-
 connection = connect(
-    host="sql5.freemysqlhosting.net",
-    user="sql5462851",
-    password="K4z8AA4th5"
+    host="localhost",
+    user="os",
+    password="PAss@2021"
 )
-database_name = 'sql5462851'
+database_name = 'medical_insurance'
+
+
+# connection = connect(
+#     host="sql5.freemysqlhosting.net",
+#     user="sql5462851",
+#     password="K4z8AA4th5"
+# )
+# database_name = 'sql5462851'
 
 
 def init_use_database():
