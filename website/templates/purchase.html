@@ -1,9 +1,50 @@
 {% extends "base.html" %}
 {% block title %}Purchase Plan{% endblock %}
 {% block content %}
+
+<script>
+   function changePlans (code) {
+       let cont_id = parseInt(code.value);
+       let plan_id = 0;
+       let text = '';
+       let contracts = {{ contracts | tojson }};
+       let plans = {{ plans | tojson }};
+       for(let i in contracts){
+           if (parseInt(contracts[i][0]) === cont_id){
+               plan_id = contracts[i][1];
+               break;
+           }
+       }
+       for(let i in plans){
+           if(parseInt(plans[i][0]) === plan_id) continue;
+           text += '<option value="' + plans[i][0] + '" style="font-weight: bold;">' + plans[i][1] + '</option>';
+
+       }
+       document.getElementById('plans').innerHTML = text ;
+       change_detail();
+    }
+    $( document ).ready(function() {
+        change_detail();
+    });
+
+   function change_detail() {
+            let plans = {{ plans | tojson }};
+            let p_idx = parseInt(document.getElementById('plans').value);
+            for(let i in plans){
+
+                if(p_idx === parseInt(plans[i][0])){
+                    p_idx = i;
+                    break
+                }
+            }
+            document.getElementById("curr_plan").innerText = "price: "+  plans[p_idx][3] +" EGP  -  Benefits: " +  plans[p_idx][2];
+    }
+
+</script>
+
+
     <div>
     <div>
-        <h4 style="margin-top: 6px;padding-top: 40px;padding-left: 103px;color: var(--bs-gray-dark);">Welcome back, {{ cus.name }}</h4>
         <div class="d-lg-flex justify-content-lg-center"></div>
     </div>
     <div class="d-lg-flex justify-content-center justify-content-lg-center" style="margin-right: 100px;margin-left: 100px;margin-top: 24px;margin-bottom: 50px;">
@@ -13,9 +54,7 @@
                     <div class="row">
                         <div class="col-md-12 text-center">
                             <form id="form1" method="post">
-                                <div class="card" style="background: rgba(111,66,193,0.15);">
-                                    <h4>Purchase Plan</h4>
-                                </div>
+<h6 class="text-center" style="background: var(--bs-yellow);padding: 9px 9px 13px;margin-bottom: 18px;color: var(--bs-indigo);font-size: 18px;">Purchase new plan</h6>
                                 <div class="row">
                                     <div class="col">
                                         <div class="row">
@@ -24,10 +63,13 @@
                                                     <div style="padding-bottom: 20px;padding-top: 47px;">
                                                         <div class="row" style="margin-left: -80px;">
                                                             <div class="col text-end" style="margin-right: 0;padding-bottom: 0;"><label class="col-form-label" style="font-weight: bold;">Beneficiary</label></div>
-                                                            <div class="col"><select name="ben" class="form-select form-select-sm" style="font-size: 17px;color: #15674f;font-weight: bold;width: 271.2px;" name="plan" required>
-                                                                    <option value="cus,{{ cus_id }}" selected style="color: #8B8676;font-weight: bold;">You</option>
-                                                                {% for dep in dependents %}
-                                                                    <option value="dep,{{ dep['cus_id'] }},{{ dep['name'] }},{{ dep['kinship'] }}" style="color: #1DA7EE;font-weight: bold;">{{ dep['kinship'].capitalize() }}, {{  dep['name'].capitalize() }} - {{  dep['plan'] }}</option>
+                                                            <div class="col"><select name="ben" class="form-select form-select-sm" style="font-size: 17px;color: #15674f;font-weight: bold;width: 271.2px;" name="plan" onchange="changePlans(this);" required>
+                                                                {% for con in contracts %}
+                                                                    {% if con.cus_id %}
+                                                                    <option value="{{ con.id }}" style="color: #15674f;font-weight: bold;">You - {{  plans_dict[con.plan_id] }}</option>
+                                                                    {% else %}
+                                                                    <option value="{{ con.id }}" style="color: #15674f;font-weight: bold;">{{ con.kinship.capitalize() }}, {{  con.dep_name.capitalize() }} - {{  plans_dict[con.plan_id] }}</option>
+                                                                    {% endif %}
                                                                 {% endfor %}
                                                             </select></div>
                                                         </div>
@@ -35,23 +77,27 @@
                                                     <div style="padding-bottom: 20px;">
                                                         <div class="row" style="margin-left: -80px;">
                                                             <div class="col" style="margin-right: 0;text-align: right;width: 528.1px;"><label class="col-form-label" style="font-weight: bold;">Plan</label></div>
-                                                            <div class="col"><select name="plan" class="form-select form-select-sm" style="font-size: 17px;color: #15674f;font-weight: bold;width: 138.2px;" name="plan" required>
+                                                            <div class="col"><select id="plans" name="plans" onchange="change_detail();" name="plan" class="form-select form-select-sm" style="font-size: 17px;color: #15674f;font-weight: bold;width: 138.2px;" name="plan" required>
                                                                 {% for i in plans %}
-                                                                    <option value="{{ i.id }}" selected style="font-weight: bold;">{{ i.type }}</option>
+                                                                    {% if i.id != contracts[0].plan_id %}
+                                                                        <option value="{{ i.id }}" style="font-weight: bold;">{{ i.type }}</option>
+                                                                    {% endif %}
                                                                 {% endfor %}
                                                                 </select></div>
                                                         </div>
+                                                    <br><br>
                                                     </div><button class="btn btn-primary" type="submit" form='form1' style="margin-left: 23px;">Purchase</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                            <br>
+                                <div style="margin-top: 0;">
+                                    <div><h4 id='curr_plan' class="col-form-label"></h4></div>
+                                </div>
                                 <div style="margin-top: 23px;"><label class="form-label">Note: If the beneficiary already has  a plan, purchasing a new one will override the old one.</label><label class="form-label">Your payment method will be charged directly according to the plan&#39;s prices listed below.</label>
                                     <div></div>
-                                </div>
-                                <div style="margin-top: 0;">
-                                    <p style="margin-bottom: 0px;">Basic Plan: 50 USD, benefits: 40% coverage</p>
                                 </div>
                             </form><label class="form-label"></label>
                         </div>
@@ -61,4 +107,8 @@
         </div>
     </div>
 </div>
+
+    <script>
+        change_detail();
+    </script>
 {% endblock %}

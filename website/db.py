@@ -1,7 +1,5 @@
 from datetime import datetime
-
 from mysql.connector import connect, Error
-
 from .struct import struct
 
 database_name = 'sql5462851'
@@ -10,18 +8,18 @@ database_name = 'sql5462851'
 # set to false after dev
 debug = False
 #
-connection = connect(
-    host="localhost",
-    user="os",
-    password="PAss@2021"
-)
-
-
 # connection = connect(
-#     host="sql5.freemysqlhosting.net",
-#     user="sql5462851",
-#     password="K4z8AA4th5"
+#     host="localhost",
+#     user="os",
+#     password="PAss@2021"
 # )
+
+
+connection = connect(
+    host="sql5.freemysqlhosting.net",
+    user="sql5462851",
+    password="K4z8AA4th5"
+)
 
 
 def init_use_database():
@@ -200,6 +198,10 @@ def add_contract_customer(cus_id, plan_id, payment_method='visa'):
 def add_contract_dependent(res_id, name, kinship, plan_id, payment_method='visa'):
     return write_db(
         f"insert into contract values (DEFAULT, {plan_id}, null, '{res_id}', '{name}', '{kinship}','{payment_method}');")
+
+def change_plan(cont_id, plan_id):
+    return write_db(
+        f"update contract set plan_id = {plan_id} where id = {cont_id};")
 
 
 def add_claim(con_id, hos_id, expenses, subject, details):

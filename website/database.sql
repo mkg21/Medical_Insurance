@@ -1,5 +1,5 @@
-CREATE DATABASE medical_insurance;
-USE medical_insurance;
+CREATE DATABASE sql5462851;
+USE sql5462851;
 
 CREATE TABLE customer
   (
@@ -109,9 +109,9 @@ insert into dependent values(7,'Sahar','1977-03-11','female','wife');
 
 
 
-insert into plan values (DEFAULT, 'Basic','5% coverage',5999.99);
-insert into plan values (DEFAULT, 'Premium','15% coverage',9999.99);
-insert into plan values (DEFAULT, 'Golden','30% coverage',19999.99);
+insert into plan values (DEFAULT, 'Basic','5% coverage',6000.00);
+insert into plan values (DEFAULT, 'Premium','15% coverage',10000.00);
+insert into plan values (DEFAULT, 'Golden','30% coverage',15000.00);
 
 
 
@@ -178,9 +178,9 @@ insert into claim values (DEFAULT, 4, 2, 480 , 'chest pain','covering 100% of th
 insert into claim values (DEFAULT, 6, 3, 780 , 'flu','covering 100% of the expenses', null, '2021-10-15');
 insert into claim values (DEFAULT, 6, 3, 2300, 'broken leg','covering 100% of the expenses', 0, '2021-01-10');
 insert into claim values (DEFAULT, 10, 2, 2000, 'asthma','covering 100% of the expenses',0, '2021-08-21');
-insert into claim values (DEFAULT, 6, 1, 700 , 'cold','covering 100% of the expenses', 1, '2021-04-06');
+insert into claim values (DEFAULT, 5, 1, 700 , 'cold','covering 100% of the expenses', 1, '2021-04-06');
 insert into claim values (DEFAULT, 7, 3, 2000, 'chest pain','covering 100% of the expenses', 0, '2021-04-03');
-insert into claim values (DEFAULT, 7, 1, 250 , 'fever','covering 100% of the expenses', 0, '2021-09-07');
+insert into claim values (DEFAULT, 8, 1, 250 , 'fever','covering 100% of the expenses', 0, '2021-09-07');
 insert into claim values (DEFAULT, 6, 3, 780 , 'flu','covering 100% of the expenses', 0, '2021-04-11');
 
 

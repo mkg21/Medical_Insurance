@@ -280,21 +280,26 @@ def view_my_claim(cid):
         return redirect(url_for('views.view_my_claims'))
 
 
-# @views.route('/customer/purchase', methods=['POST', 'GET'])
-# def purchase():
-#     global curr_cus
-#     if request.method == 'POST':
-#         ben = request.form.get('ben')
-#         plan = request.form.get('plan')
-#
-#         return render_template('home.html')
-#
-#     cus = get_customer(curr_cus)
-#     cus_contract = get_contract_for_cus(cus)
-#     deps = get_customer_dependents(cus.id)
-#     deps_contracts = [(i, get_contract_for_dep(i)) for i in deps]
-#
-#     return render_template('purchase.html',
-#                            plans=get_plans(),
-#                            cus=cus_contract,
-#                            deps=deps_contracts)
+@views.route('/customer/purchase', methods=['POST', 'GET'])
+def purchase():
+    global curr_cus
+    if request.method == 'POST':
+        try:
+            cont_id = int(request.form.get('ben'))
+            plan_id = int(request.form.get('plans'))
+            change_plan(cont_id, plan_id)
+            flash("Plan purchased successfully", "success")
+            return redirect(url_for('views.customer'))
+        except:
+            flash("Something went wrong!", "danger")
+            return render_template('purchase.html')
+
+    cus = get_customer(curr_cus)
+    cus_con = get_contract_for_cus(cus)
+
+    deps = get_customer_dependents(curr_cus)
+    dep_con = [get_contract_for_dep(d) for d in deps]
+    dep_con = [i for i in dep_con if i]
+    contracts = [cus_con] + dep_con
+
+    return render_template('purchase.html', plans=get_plans(), plans_dict=get_plan_id_name_dict(), contracts=contracts)
