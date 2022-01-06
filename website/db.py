@@ -9,15 +9,15 @@ connection = connect(
     user="os",
     password="PAss@2021"
 )
-database_name = 'medical_insurance'
+# database_name = 'medical_insurance'
 
 
-# connection = connect(
-#     host="sql5.freemysqlhosting.net",
-#     user="sql5462851",
-#     password="K4z8AA4th5"
-# )
-# database_name = 'sql5462851'
+connection = connect(
+    host="sql5.freemysqlhosting.net",
+    user="sql5462851",
+    password="K4z8AA4th5"
+)
+database_name = 'sql5462851'
 
 
 def init_use_database():
