@@ -39,7 +39,7 @@ Since this is a course project, a simple login, logout is emplemented with no au
 
  - Signup as a new customer
 
-## Current rules
+## Current limitations and rules
 1.  Individual (customer/dependent) can only have one contract and a single contract is linked to only one Individual.​
     
 2.  Contract holds the plan type and the beneficiary of that plan.​
