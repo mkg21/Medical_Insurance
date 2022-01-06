@@ -4,11 +4,11 @@ from mysql.connector import connect, Error
 # set to false after dev
 debug = False
 
-connection = connect(
-    host="localhost",
-    user="os",
-    password="PAss@2021"
-)
+# connection = connect(
+#     host="localhost",
+#     user="os",
+#     password="PAss@2021"
+# )
 # database_name = 'medical_insurance'
 
 
