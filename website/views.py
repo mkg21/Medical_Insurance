@@ -45,6 +45,7 @@ def new_customer():
             add_contract_customer(cus, plan)
             with open('current_cus', 'w') as f:
                 json.dump(cus, f)
+                curr_cus = cus
 
         except:
             flash('Please enter valid data!', 'danger')
