@@ -9,15 +9,9 @@ connection = connect(
     user="os",
     password="PAss@2021"
 )
+
 database_name = 'medical_insurance'
 
-#
-# connection = connect(
-#     host="sql5.freemysqlhosting.net",
-#     user="sql5462851",
-#     password="K4z8AA4th5"
-# )
-# database_name = 'sql5462851'
 
 
 def init_use_database():
@@ -136,8 +130,8 @@ def get_customer(cid, include_cont_plan=False):
 def get_all_customers():
     """ returns all customers from db as a list """
     # sorting alphabetically
-    customers = read_db(f"SELECT * from customer")
-    return sorted(customers, key=lambda cus: cus['f_name'])
+    customers = read_db(f"SELECT * from customer ORDER BY f_name")
+    return customers
 
 
 # unused and may be deleted
@@ -155,11 +149,10 @@ def get_claims_for_customer(cid):
     returns all claims filed by a customer
     cid: customer id
     """
-    claims = read_db(
-        f"select *, status is not null as is_resolved from claim where con_id in (select id from contract where cus_id={cid} or res_id={cid})")
-
     # sort claims according to filing date
-    claims.sort(key=lambda c: c['f_date'], reverse=True)
+    claims = read_db(
+        f"select *, status is not null as is_resolved from claim where con_id in "
+        f"(select id from contract where cus_id={cid} or res_id={cid}) ORDER BY f_date desc")
     return claims
 
 
@@ -170,10 +163,8 @@ def get_unresolved_claims_for_customer(cid):
     """
     # getting all claims by customer id for himself and his deps
     claims = read_db(
-        f"select *, status is not null as is_resolved from claim where con_id in (select id from contract where cus_id={cid} or res_id={cid}) and status is null")
-
-    # sort claims according to filing date
-    claims.sort(key=lambda c: c['f_date'], reverse=True)
+        f"select *, status is not null as is_resolved from claim where con_id in "
+        f"(select id from contract where cus_id={cid} or res_id={cid}) and status is null ORDER BY f_date desc")
     return claims
 
 
@@ -181,10 +172,7 @@ def get_latest_claims():
     """ returns all claims sorted by filing date """
     # get all claims
     claims = read_db(
-        f"select *, status is not null as is_resolved from claim")
-
-    # sort them according to filing date
-    claims.sort(key=lambda c: c['f_date'], reverse=True)
+        f"select *, status is not null as is_resolved from claim ORDER BY f_date desc")
     return claims
 
 
@@ -214,7 +202,7 @@ def get_customer_dependents(cid, include_cont_plan=False):
     include_cont_plan: option to include plan type as plan_type and contract as contract in customer dict
     """
     # getting all dependents for a customer using customer id
-    deps = read_db(f"SELECT *, {age_query} from dependent where cus_id = {cid}")
+    deps = read_db(f"SELECT *, {age_query} from dependent where cus_id = {cid} ORDER BY b_date ")
 
     # if contract and plan data to be included
     if include_cont_plan:
@@ -223,7 +211,7 @@ def get_customer_dependents(cid, include_cont_plan=False):
             i['plan_type'] = get_plan_type(i['contract']['plan_id'])['type']
 
     # sort them by age
-    return sorted(deps, key=lambda dep: dep['age'], reverse=True)
+    return deps
 
 
 def get_plans(get_hos_num=False):
@@ -274,10 +262,10 @@ def get_available_hospitals_for_plan(pid):  # use where plan_id <= {pid}
     returns hospitals enrolled in a plan
     pid: plan id
     """
-    q = f"select * from hospital h inner join enrolled e on h.id = e.hos_id where e.plan_id = {pid}"
+    q = f"select * from hospital h inner join enrolled e on h.id = e.hos_id where e.plan_id = {pid} ORDER BY name"
     hosp = read_db(q)
     # sorting alphabetically
-    return sorted(hosp, key=lambda hos: hos['name'])
+    return hosp
 
 
 def get_available_hospitals_number_for_plan(pid):  # use where plan_id <= {pid}
