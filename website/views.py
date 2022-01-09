@@ -1,3 +1,4 @@
+import json
 from datetime import datetime
 
 from flask import Blueprint, render_template, request, flash, redirect, url_for
@@ -6,7 +7,7 @@ from .db import *
 views = Blueprint('views', __name__)
 
 # current signed in customer
-curr_cus = 1
+curr_cus = json.load(open('current_cus'))
 
 
 @views.route('/')
@@ -42,7 +43,9 @@ def new_customer():
         try:
             cus = add_customer(first, middle, last, email, address, date, gender, phone)
             add_contract_customer(cus, plan)
-            curr_cus = cus
+            with open('current_cus', 'w') as f:
+                json.dump(cus, f)
+
         except:
             flash('Please enter valid data!', 'danger')
             return redirect(url_for('views.new_customer'))
