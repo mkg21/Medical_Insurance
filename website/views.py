@@ -7,19 +7,19 @@ from .db import *
 views = Blueprint('views', __name__)
 
 # current signed in customer
-curr_cus = json.load(open('current_cus'))
+# curr_cus = json.load(open('current_cus'))
 
 
 @views.route('/')
 def home():
     # customer = get_customer(12)
     # print(customer)
-    return render_template('home.html', customer=get_customer(curr_cus))
+    return render_template('home.html', customer=get_customer(json.load(open('current_cus'))))
 
 
 @views.route('/new_customer', methods=['GET', 'POST'])
 def new_customer():
-    global curr_cus
+    curr_cus = json.load(open('current_cus'))
     if request.method == 'POST':
         first = request.form.get('firstName').capitalize()
         middle = request.form.get('middleName').capitalize()
@@ -59,7 +59,7 @@ def new_customer():
 
 @views.route('/new_dependent', methods=['GET', 'POST'])
 def new_dependent():
-    global curr_cus
+    curr_cus = json.load(open('current_cus'))
     if request.method == 'POST':
         try:
             name = request.form.get('name').capitalize()
@@ -92,7 +92,7 @@ def new_dependent():
 
 @views.route('/admin/new_hospital', methods=['POST', 'GET'])
 def new_hospital():
-    global curr_cus
+    curr_cus = json.load(open('current_cus'))
     plans = get_plans()
     if request.method == 'POST':
         name = request.form.get('name').capitalize()
@@ -124,13 +124,13 @@ def new_hospital():
 
 @views.route('/customer')
 def customer():
-    global curr_cus
+    curr_cus = json.load(open('current_cus'))
     return render_template('customer_home.html', cus=get_customer(curr_cus))
 
 
 @views.route('/customer/file_claim', methods=['POST', 'GET'])
 def file_claim():
-    global curr_cus
+    curr_cus = json.load(open('current_cus'))
     hospitals = {}
     for i in get_plans():
         hospitals[i['id']] = get_available_hospitals_for_plan(i['id'])
@@ -162,7 +162,7 @@ def file_claim():
 
 @views.route('/admin/claims/<cid>', methods=['POST', 'GET'])
 def view_claim(cid):
-    global curr_cus
+    curr_cus = json.load(open('current_cus'))
     if request.method == 'POST':
         try:
             claim_id = int(request.form.get('claim_id'))
@@ -193,7 +193,7 @@ def view_claim(cid):
 
 @views.route('/customer/available-hospitals')
 def available_hospitals():
-    global curr_cus
+    curr_cus = json.load(open('current_cus'))
     hospitals = {}
     for i in get_plans():
         hospitals[i['id']] = get_available_hospitals_for_plan(i['id'])
@@ -250,14 +250,14 @@ def latest_claims():
 
 @views.route('/customer/claims', methods=['POST', 'GET'])
 def view_my_claims():
-    global curr_cus
+    curr_cus = json.load(open('current_cus'))
     claims = get_claims_for_customer(curr_cus)
     return render_template('view_claims.html', claims=claims, is_cus=1)
 
 
 @views.route('/customer/claims/<cid>', methods=['POST', 'GET'])
 def view_my_claim(cid):
-    global curr_cus
+    curr_cus = json.load(open('current_cus'))
     try:
         claim = get_claim(cid)
         contract = get_contract(claim['con_id'])
@@ -280,7 +280,7 @@ def view_my_claim(cid):
 
 @views.route('/customer/purchase', methods=['POST', 'GET'])
 def purchase():
-    global curr_cus
+    curr_cus = json.load(open('current_cus'))
     if request.method == 'POST':
         try:
             cont_id = int(request.form.get('ben'))
