@@ -5,11 +5,6 @@ from random import randrange
 # set to false after dev
 debug = True
 
-connection = connect(
-    host="localhost",
-    user="os",
-    password="PAss@2021"
-)
 
 connection = sqlite3.connect('./mysqlite3.db', check_same_thread=False)
 
