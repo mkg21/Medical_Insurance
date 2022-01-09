@@ -65,7 +65,7 @@ CREATE TABLE contract
      FOREIGN KEY (plan_id) REFERENCES plan (id),
      UNIQUE res_id (res_id, dep_name, kinship),
 
-     CHECK ((cus_id IS NULL AND ( res_id IS NOT NULL AND dep_name IS NOT NULL AND kinship IS NOT NULL )) 
+     CHECK ((cus_id IS NULL AND ( res_id IS NOT NULL AND dep_name IS NOT NULL AND kinship IS NOT NULL ))
 		OR (cus_id IS NOT NULL AND ( res_id IS NULL AND dep_name IS NULL AND kinship IS NULL )))
   );
 

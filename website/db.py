@@ -1,8 +1,9 @@
 from datetime import datetime
 from mysql.connector import connect, Error
-
+import sqlite3
+from random import randrange
 # set to false after dev
-debug = False
+debug = True
 
 connection = connect(
     host="localhost",
@@ -10,35 +11,40 @@ connection = connect(
     password="PAss@2021"
 )
 
-database_name = 'medical_insurance'
+connection = sqlite3.connect('./mysqlite3.db', check_same_thread=False)
 
+
+def dict_factory(cursor, row):
+    d = {}
+    for idx, col in enumerate(cursor.description):
+        d[col[0]] = row[idx]
+    return d
+
+
+connection.row_factory = dict_factory
+database_name = 'medical_insurance'
 
 
 def init_use_database():
     """
     use current database and create it if it doesn't exist
     """
-    try:
-        with connection.cursor() as cursor:
-            cursor.execute(f"USE {database_name}")
-
-
-    except Error:
-        print(f'Creating Database {database_name}...')
-        with open('database.sql', encoding='utf8') as file:
-            queries = [i + ';' for i in file.read().split(';') if i.strip()]
-            with connection.cursor() as cursor:
-                try:
-                    for query in queries:
-                        cursor.execute(query)
-                        connection.commit()
-                except Error as e:
-                    print(f"DATABASE ERROR: ( {query} ) -> ", e)
-                    cursor.execute(f'DROP DATABASE {database_name};')
+    print(f'Creating Database {database_name}...')
+    with open('database.sql', encoding='utf8') as file:
+        queries = [i + ';' for i in file.read().split(';') if i.strip()]
+        cursor = connection.cursor()
+        try:
+            for query in queries:
+                cursor.execute(query)
+                connection.commit()
+        except sqlite3.Error as e:
+            print(f"DATABASE ERROR: ( {query} ) -> ", e)
+            cursor.execute(f'DROP DATABASE {database_name};')
+        cursor.close()
 
 
 # init database
-init_use_database()
+# init_use_database()
 
 
 # execute queries that get data from db
@@ -51,23 +57,26 @@ def read_db(query, one=False, dictionary=True):
     """
     if debug:
         try:
-            with connection.cursor(dictionary=dictionary) as cursor:
-                cursor.execute(query)
-                if one:
-                    data = cursor.fetchone()
-                else:
-                    data = cursor.fetchall()
-                return data
-        except Error as e:
-            print("DATABASE ERROR: ", e)
-    else:
-        with connection.cursor(dictionary=dictionary) as cursor:
+            cursor = connection.cursor()
             cursor.execute(query)
             if one:
                 data = cursor.fetchone()
             else:
                 data = cursor.fetchall()
+            cursor.close()
             return data
+
+        except sqlite3.Error as e:
+            print("DATABASE ERROR: ", e)
+    else:
+        cursor = connection.cursor()
+        cursor.execute(query)
+        if one:
+            data = cursor.fetchone()
+        else:
+            data = cursor.fetchall()
+        cursor.close()
+        return data
 
 
 def write_db(query):
@@ -75,25 +84,30 @@ def write_db(query):
     execute queries that add to, update db. and returns last added record id if exist
     query: mysql query as a string to be executed
     """
+    print(query)
     global debug
     if debug:
         try:
-            with connection.cursor() as cursor:
-                cursor.execute(query)
-                connection.commit()
-                return cursor.lastrowid
-        except Error as e:
+            cursor = connection.cursor()
+            cursor.execute(query)
+            connection.commit()
+            cursor.close()
+            return cursor.lastrowid
+        except sqlite3.Error as e:
             print("DATABASE ERROR: ", e)
             return None
     else:
-        with connection.cursor() as cursor:
-            cursor.execute(query)
-            connection.commit()
-            return cursor.lastrowid
+        cursor = connection.cursor()
+
+        cursor.execute(query)
+
+        connection.commit()
+        cursor.close()
+        return cursor.lastrowid
 
 
 # partial query string to calculate age from DOB
-age_query = "DATE_FORMAT(FROM_DAYS(DATEDIFF(CURDATE(),b_date)), '%Y')+0 AS age"
+age_query = "cast(strftime('%Y.%m%d', 'now') - strftime('%Y.%m%d', b_date) as int) as age"
 
 
 def get_cus_plan(cus):
@@ -283,7 +297,7 @@ def add_customer(f_name, m_name, l_name, email, address, b_date, gender, phone):
     args: first name, middle name, last name, email, address, birthdate, gender. phone number
     """
     return write_db(
-        f"INSERT INTO customer VALUES(Default, '{f_name}','{m_name}','{l_name}','{email}','{address}','{b_date}','{gender}','{phone}')")
+        f"INSERT INTO customer VALUES({randrange(0, 999999)},  '{f_name}','{m_name}','{l_name}','{email}','{address}','{b_date}','{gender}','{phone}')")
 
 
 def add_hospital(name, address, email, phone):
@@ -291,7 +305,7 @@ def add_hospital(name, address, email, phone):
     add new hospital to db using its data
     args: hospital name, address, email address, phone number
     """
-    return write_db(f"INSERT INTO hospital VALUES(Default, '{name}','{address}','{email}','{phone}')")
+    return write_db(f"INSERT INTO hospital VALUES({randrange(0, 999999)},  '{name}','{address}','{email}','{phone}')")
 
 
 def add_dependent(cus_id, name, b_date, gender, kinship):
@@ -304,13 +318,13 @@ def add_dependent(cus_id, name, b_date, gender, kinship):
 
 def add_contract_customer(cus_id, plan_id, payment_method='visa'):
     """ add new contract for a customer to db using its data """
-    return write_db(f"insert into contract values (DEFAULT, {plan_id}, {cus_id}, null, null, null,'{payment_method}');")
+    return write_db(f"insert into contract values ({randrange(0, 999999)},  {plan_id}, {cus_id}, null, null, null,'{payment_method}');")
 
 
 def add_contract_dependent(res_id, name, kinship, plan_id, payment_method='visa'):
     """ add new contract for a dependent to db using its data """
     return write_db(
-        f"insert into contract values (DEFAULT, {plan_id}, null, '{res_id}', '{name}', '{kinship}','{payment_method}');")
+        f"insert into contract values ({randrange(0, 999999)},  {plan_id}, null, '{res_id}', '{name}', '{kinship}','{payment_method}');")
 
 
 def change_plan(cont_id, plan_id):
@@ -328,7 +342,7 @@ def add_claim(con_id, hos_id, expenses, subject, details):
     cont_id: contract id
     """
     return write_db(
-        f"insert into claim values (DEFAULT, {con_id}, {hos_id}, {expenses}, '{subject}', '{details}' , null, '{datetime.today().date()}');")
+        f"insert into claim values ({randrange(0, 999999)},  {con_id}, {hos_id}, {expenses}, '{subject}', '{details}' , null, '{datetime.today().date()}');")
 
 
 def enroll_hospital_in_plans(hos_id, plans_ids):
@@ -354,4 +368,3 @@ def get_contract(con_id):
     """ get contract data using its id """
     con = read_db(f"select * from contract where id={con_id}", one=True)
     return con
-
