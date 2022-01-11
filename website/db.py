@@ -283,7 +283,7 @@ def get_available_hospitals_number_for_plan(pid):  # use where plan_id <= {pid}
     pid: plan id
     """
     q = f"select COUNT(*) from hospital h inner join enrolled e on h.id = e.hos_id where e.plan_id = {pid}"
-    return read_db(q, one=True, dictionary=False)
+    return read_db(q, one=True, dictionary=False)['COUNT(*)']
 
 
 def add_customer(f_name, m_name, l_name, email, address, b_date, gender, phone):
